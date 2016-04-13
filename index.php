@@ -1,9 +1,13 @@
    <?php 
    require ('phpQuery/phpQuery/phpQuery.php');
-   // заметка вторую позицию обработать ссилку и спан отдельно.
-  
-  //moreInfoFlat
-  //$hentry = $document->find('div.hentry');
+   include_once 'debug/debug.php';
+   include_once 'library/sjontocv.php';
+
+
+
+$mainArr[]=array();  
+
+
 
 function stage1($value='')
 {
@@ -13,268 +17,164 @@ function stage1($value='')
   
   $document = phpQuery::newDocument($habrablog);
 
-
+ $arrElement=array();
+ 
 
    //  title  $document->find('');
 //1
-  $p_titleInfo = $document->find('p.titleInfo');
+  //$p_titleInfo = $document->find('.detailed-advert .skip-export div:first');
+//tr.detailed-advert:nth-child(2) > td:nth-child(2) > div:nth-child(1)
 
-echo "<br>p_titleInfo :".count($p_titleInfo);
-//2
-  $p_titleInfo_span= $document->find('.deteiledInfoFlat span a');
+    // $p_titleInfo = $document->find('tr.detailed-advert:nth-child(1)   td:nth-child(2)   div:nth-child(2)   div:nth-child(1)   div:nth-child(1)   div:nth-child(1)   div:nth-child(1)');
+  //print_r($p_titleInfo);
 
-  //.priceInfo
-echo "<br>$p_titleInfo_span :".count($p_titleInfo_span);
+$a1='.detailed-advert .skip-export >div:first >';
+$a2='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1)';
+$a3 ='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > span:nth-child(2)';
 
-//3
-  $priceInfo=$document->find('.priceInfo');
-    //.description
+$a345 ='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1)';
+//foto  ???  сейчас показать   взять все сссилки. 
+//tr.detailed-advert:nth-child(1)   менять 1 для подбора
+$a6 ='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2)';
+$a7_8_9_10_11_12='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2)';
+//tel
+$a13 ='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > span:nth-child(1)';
+//name   many info
+ $a14 ='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > span:nth-child(2)';
 
-echo "<br> priceInfo :".count( $priceInfo);
-  
-//4
-  $description=$document->find('.description');
-   //.bgWhite   table
+ // own
+  $a15 ='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > span:nth-child(4)';
+//$a ='';
+//
+//$a ='';
+//1 
+$str=str_replace('>', '', $a1) ;
+$p_titleInfo = $document->find($str);
 
-echo "<br> description :".count( $description);
-//5
-   // $bgWhite_td_div_dateAndAutor=$document->find('.bgWhite td div.dateAndAutor');
- $bgWhite_td_div_dateAndAutor=$document->find('.dateAndAutor span');
-//infRoom
-
-
-echo "<br>bgWhite_td_div_dateAndAutor :".count($bgWhite_td_div_dateAndAutor);
-
-//6
-    $bgWhite_td_div_infRoom=$document->find('.bgWhite td div.infRoom p');
-//location
-
-
-echo "<br> bgWhite_td_div_infRoom :".count( $bgWhite_td_div_infRoom);
-
-//7
-        $bgWhite_td_div_location=$document->find('td div.location');
-
- //infoHome
-
-echo "<br>bgWhite_td_div_location :".count($bgWhite_td_div_location);
-//8 
-         $bgWhite_td_div_infoHome=$document->find('td div.infoHome');
- //listTable   
-
-echo "<br>bgWhite_td_div_infoHome :".count($bgWhite_td_div_infoHome);
-
-//9
-     $bgWhite_td_ul_listTable=$document->find('.bgWhite td ul.listTable ');
-//moreInfoAutor собствение суборенда ...
+//Debuger::dumper($p_titleInfo->text());
+$arrElement['time_publish']=$p_titleInfo->text();
 
 
-echo "<br>bgWhite_td_ul_listTable :".count( $bgWhite_td_ul_listTable);
-// 10
-      $bgWhite_td_div_moreInfoAutor_strong=$document->find('td div.moreInfoAutor strong ');
+//2 
+$str=null;
+$str=str_replace('>', '', $a2) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($str);
 
-echo "<br>bgWhite_td_div_moreInfoAutor_strong :".count($bgWhite_td_div_moreInfoAutor_strong);
-
-
-
-
-    //echo  $bgWhite_td_div_moreInfoAutor_strong;
-
-
-
-echo "-------------------<br>";
-//.listFlat tr  count el      divide 2  !!!!!
- 
-  $listFlat_tbody_tr = $document->find('.listFlat tr');
-  echo count($listFlat_tbody_tr);
-
-$mainArr=array();
-
-//1
-$arrtitleInfo=array();
-foreach ($p_titleInfo  as $key => $value) {
-
-  # code...nodeValue
-      $arrtitleInfo['textContent_'.$key]=$value->textContent;
-      $arrtitleInfo['nodeValue_'.$key]=$value->nodeValue;
-}
-
-$mainArr[]=$arrtitleInfo;    
-
-//2
-$arrtitleInfo=null;
-$arrtitleInfo=array();
-
-/*for ($i=0; $i < count($p_titleInfo_span) ; $i=$i+2) { 
-  # code...
-    //  $arrtitleInfo['nodeValue_'.$key]=;
-      $arrtitleInfo['textContent_'.$i]= $p_titleInfo_span[$i];
-      $arrtitleInfo['nodeValue_'.$i+1]=$p_titleInfo_span[$i+1];
-      break;
-
-}*/
-
-
-foreach ($p_titleInfo_span  as $key => $value) {
-
-  # code...nodeValue
-      // $arrtitleInfo['nodeValue_'.$key]=$value;
-      $arrtitleInfo['textContent_'.$key]=$value->textContent;
-      $arrtitleInfo['nodeValue_'.$key]=$value->nodeValue;
-     // break;
-}
-
-
-$mainArr[]=$arrtitleInfo;   
+//Debuger::dumper($p_titleInfo->text());
+$arrElement['description']=$p_titleInfo->text();
 
 //3
-//$priceInfo
-//2
-$arrtitleInfo=null;
-$arrtitleInfo=array();
-foreach ($priceInfo as $key => $value) {
+$str=null;
+$str=str_replace('>', '', $a3) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($str);
 
-  # code...nodeValue
-     //  $arrtitleInfo['someKey_'.$key]=$value;
-      $arrtitleInfo['textContent_'.$key]=$value->textContent;
-      $arrtitleInfo['nodeValue_'.$key]=$value->nodeValue;
-       //break;
-}
-$mainArr[]=$arrtitleInfo;   
+//Debuger::dumper($p_titleInfo->text());
+$arrElement['link_at_map_adress']=$p_titleInfo->text();
 
-//4
-//$priceInfo
-$arrtitleInfo=null;
-$arrtitleInfo=array();
-foreach ($description as $key => $value) {
+//345   распарсить отдельно. через регульрку
+$str=null;
+$str=str_replace('>', '', $a345) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($str);
 
-  # code...nodeValue
-      // $arrtitleInfo['someKey_'.$key]=$value;
-      $arrtitleInfo['textContent_'.$key]=$value->textContent;
-      $arrtitleInfo['nodeValue_'.$key]=$value->nodeValue;
-       //break;
-}
+//Debuger::dumper($p_titleInfo);
+
+var_dump($p_titleInfo);
+
+$arrElement['adress_district_metro_']=$p_titleInfo->text();
 
 
-$mainArr[]=$arrtitleInfo;  
-
-
-//5
-//$priceInfo
-$arrtitleInfo=null;
-$arrtitleInfo=array();
-foreach ($bgWhite_td_div_dateAndAutor as $key => $value) {
-
-  # code...nodeValue
-      // $arrtitleInfo['someKey_'.$key]=$value;
-      $arrtitleInfo['textContent_'.$key]=$value->textContent;
-      $arrtitleInfo['nodeValue_'.$key]=$value->nodeValue;
-       //break;
-}
-$mainArr[]=$arrtitleInfo;  
 //6
-// bgWhite_td_div_infRoom
-$arrtitleInfo=null;
-$arrtitleInfo=array();
-foreach ($bgWhite_td_div_infRoom as $key => $value) {
+$str=null;
+$str=str_replace('>', '', $a6) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($str);
 
-  # code...nodeValue
-      // $arrtitleInfo['someKey_'.$key]=$value;
-      $arrtitleInfo['textContent_'.$key]=$value->textContent;
-      $arrtitleInfo['nodeValue_'.$key]=$value->nodeValue;
-      // break;
-}
+//Debuger::dumper($p_titleInfo->elements);
+//print_r($p_titleInfo->elements);
+$arrElement['foto_links']=$p_titleInfo;
 
 
+//789101012
+$str=null;
+$str=str_replace('>', '', $a7_8_9_10_11_12 ) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($str);
 
-$mainArr[]=$arrtitleInfo;  
-//7
-// bgWhite_td_div_location
-$arrtitleInfo=null;
-$arrtitleInfo=array();
-foreach ($bgWhite_td_div_location as $key => $value) {
+//Debuger::dumper($p_titleInfo->elements);
+//print_r($p_titleInfo->elements);
+$arrElement['price_type_room_sqare_floor_floors']=$p_titleInfo;
 
-  # code...nodeValue
-      // $arrtitleInfo['someKey_'.$key]=$value;
-      $arrtitleInfo['textContent_'.$key]=$value->textContent;
-      $arrtitleInfo['nodeValue_'.$key]=$value->nodeValue;
-      // break;
-}
+//13
+$str=null;
+$str=str_replace('>', '', $a13 ) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($str);
 
+//Debuger::dumper($p_titleInfo->text());
+//print_r($p_titleInfo->elements);
+$arrElement['tel']=$p_titleInfo->text();
 
+//14 name many info
+$str=null;
+$str=str_replace('>', '', $a14 ) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($str);
 
-$mainArr[]=$arrtitleInfo;  
-// 8
-// bgWhite_td_div_infoHome
-$arrtitleInfo=null;
-$arrtitleInfo=array();
-foreach ($bgWhite_td_div_infoHome as $key => $value) {
+//Debuger::dumper($p_titleInfo->text());
+//print_r($p_titleInfo->elements);
+$arrElement['name']=$p_titleInfo->text();
 
-  # code...nodeValue
-     //  $arrtitleInfo['someKey_'.$key]=$value;
-      $arrtitleInfo['textContent_'.$key]=$value->textContent;
-      $arrtitleInfo['nodeValue_'.$key]=$value->nodeValue;
-      // break;
-}
+//15  own
+$str=null;
+$str=str_replace('>', '', $a15 ) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($str);
 
-
-
-$mainArr[]=$arrtitleInfo; 
-
-//9
-// bgWhite_td_ul_listTable
-$arrtitleInfo=null;
-$arrtitleInfo=array();
-foreach ($bgWhite_td_ul_listTable as $key => $value) {
-
-  # code...nodeValue
-       //$arrtitleInfo['someKey_'.$key]=$value;
-     $arrtitleInfo['textContent_'.$key]=$value->textContent;
-      $arrtitleInfo['nodeValue_'.$key]=$value->nodeValue;
-      // break;
-}
+//Debuger::dumper($p_titleInfo->text());
+//print_r($p_titleInfo->elements);
+$arrElement['name']=$p_titleInfo->text();
 
 
 
-$mainArr[]=$arrtitleInfo; 
-
-//10
-// bgWhite_td_div_moreInfoAutor_strong
-$arrtitleInfo=null;
-$arrtitleInfo=array();
-foreach ($bgWhite_td_div_moreInfoAutor_strong as $key => $value) {
-
-  # code...nodeValue
-       //$arrtitleInfo['someKey_'.$key]=$value;
-      $arrtitleInfo['textContent_'.$key]=$value->textContent;
-      $arrtitleInfo['nodeValue_'.$key]=$value->nodeValue;
-      // break;
-}
-
-
-
-$mainArr[]=$arrtitleInfo; 
-
-
-
-
+$mainArr[]=$arrElement;
 
 
 
 $resultJsonFile=json_encode($mainArr, JSON_UNESCAPED_UNICODE);
 
+//jsontotable($resultJsonFile);
+//print_r($resultJsonFile);
+//Debuger::dumper($mainArr);
+//print_r($resultJsonFile);
+//print_r( jsontocv($resultJsonFile));
 
-$myFile = "resJsonFile.txt";
-$fh = fopen($myFile, 'w') or die("can't open file");
+return;
 
-fwrite($fh, $resultJsonFile);
-fclose($fh);
+
+
+
+
+
+
+
+
+//$resultJsonFile=json_encode($mainArr, JSON_UNESCAPED_UNICODE);
+
+
+//$myFile = "resJsonFile.txt";
+//$fh = fopen($myFile, 'w') or die("can't open file");
+
+//fwrite($fh, $resultJsonFile);
+//fclose($fh);
 //print_r($mainArr[1]);
 }
 
 
 
-stage1('https://pyxi.ru/base.php');
+stage1('http://rent-scaner.ru/estate');
 
 //print_r($hentry);
 

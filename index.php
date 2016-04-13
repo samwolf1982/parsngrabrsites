@@ -1,7 +1,62 @@
    <?php 
-   require ('phpQuery/phpQuery/phpQuery.php');
+   require_once ('phpQuery/phpQuery/phpQuery.php');
    include_once 'debug/debug.php';
    include_once 'library/sjontocv.php';
+
+
+?>
+<script src="library/vendor/jquery-1.7.2.min.js"></script>
+<script src="library/jquery.dynatable.js"></script>
+<script type='text/javascript'>
+//формируем JSON
+
+//отправляем JSON, используем технологию JSONP для кроссдоменной передачи данн                               
+</script>
+
+  <script type="text/javascript">
+
+  var JsonData = {
+  "test1":"value1",
+  "test2":{
+          "test2_in":"internal value test2"
+  }
+}; 
+      //  var e = document.getElementById('testForm'); e.action='test.php'; e.submit();
+function go2(argument) {
+
+$.ajax({
+  url: 'gogo.php',
+  success: function(data){
+    $('#my-final-table').dynatable({
+      dataset: {
+        records: data
+      }
+    });
+  }
+});
+
+console.log("GHJKL");
+
+
+}
+
+      </script>
+      
+
+<table id="my-final-table">
+  <thead>
+    <th>Band</th>
+    <th>Song</th>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+  <p style="text-align: center"><button>Кнопка с текстом</button>
+  <button><img src="" alt="click me"  
+          style="vertical-align: middle" onclick="go2()"> click me</button></p>
+<?php
+
+
 
 
 
@@ -68,6 +123,7 @@ $str=str_replace('>', '', $a1) ;
 $p_titleInfo = $document->find($str);
 
 //Debuger::dumper($p_titleInfo->text());
+$arrElement['curent_time']= date("d F Y"). "  ".date("H:i:s");;
 $arrElement['time_publish']=$p_titleInfo->text();
 
 
@@ -107,50 +163,21 @@ $str=$a4;
 $p_titleInfo=null;
 $p_titleInfo = $document->find($str);// find element
 
-//Debuger::dumper($p_titleInfo);
-//var_dump($p_titleInfo);
-//echo "$p_titleInfo->data";
 
-
-
-
-//foreach ($p_titleInfo as $key => $value) {
-
-  //echo 'count ' . $value->data;
-/*  foreach ($value->childNodes as $key1 => $value1) {
-    # code...
-    echo $value1;
-  var_dump($value1);
-  echo "<br><br>";
-    //echo $value1->text();
-  }*/
-      //echo  $key;
- // var_dump($value);
 
  
   
-//}
-// echo "$p_titleInfo";*/
+//      distric metro old
 
+/*$s=null;
 
-//$p_titleInfo = $document->find('tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1)');
-//$s=str_replace('<div class="col-md-6">', '', $s);
-
-$s=null;
-//$s=htmlspecialchars( $p_titleInfo);
 $s=htmlspecialchars_decode( htmlentities ($p_titleInfo));
-//$s=htmlentities($p_titleInfo, ENT_QUOTES | ENT_IGNORE, "UTF-8",false);
-//$delimetr="::::::";
-$s= str_replace('<div class="col-md-6">',' ' , $s);
-//$s= str_replace('<br>',$delimetr , $s);
 
- //   echo "$s";
+$s= str_replace('<div class="col-md-6">',' ' , $s);
+
 
 $strarr=explode('<br>',$s);
 
-
-
-//$s= htmlentities ($strarr);
 try {
 
   if(htmlentities ($strarr[1])==' &mdash;'){
@@ -158,39 +185,50 @@ try {
   }else
   $arrElement['district']=htmlentities ($strarr[1]);
 $arrElement['metro']=htmlspecialchars( htmlentities ($strarr[2]));
-  //for ($i=0; $i <3 ; $i++) { 
-  # code...
- // echo  htmlentities ($strarr[$i])  ."  <br>";
+
 
 
 } catch (Exception $e) {
   echo "Error 345 ".e;
 }
 
-
-/*
-foreach ($strarr as $keys => $values) {
-  # code...
-   echo  $values  ."";
-  //echo  htmlspecialchars( $values)  ."-----<br>----";
-}*/
+*/
 
 
-//$t="<++>";
-//$s= strtr($s, "<++>", "    ");
-  //$s=explode("<br>",$s); 
-//var_dump( strip_tags ($s));
-//Debuger::dumper($s);
-//$s=str_replace(['<div', 'class="col-md-6">'],' ', $s);
-// $s=strip_tags($s);
-//$pos = strpos($s, ">");
-//substr_replace();
-//$s.chop('<div class="col-md-6">');
 
-//echo $pos;
-//echo substr_replace($s,"",0,38);
 
-//$arrElement['adress_district_metro_']=$p_titleInfo->text();
+// 4 distric   tr.detailed-advert:nth-child(1) > td:nth-child(12)
+
+$a4='tr.detailed-advert:nth-child(1) > td:nth-child(12)';
+$str=null;
+$str=str_replace('>', '', $a4) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a4);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+ 
+$arrDistric=array();
+$arrDistric['location']="lorem lorem lorem"; //    later
+$arrDistric['link_adress']=$pq->text();
+//$arrDistric['link_adress']="loremem";
+//echo "pq->text()";
+$arrElement['distric']=$arrDistric;
+
+// metro  tr.detailed-advert:nth-child(1) > td:nth-child(13)
+$a5='tr.detailed-advert:nth-child(1) > td:nth-child(13)';
+$str=null;
+$str=str_replace('>', '', $a5) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a5);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+
+$arrElement['metro']=$pq->text();;
+
+// metro
+
+
+
 
 
 //6 foto
@@ -433,7 +471,7 @@ $resultJsonFile=json_encode($mainArr, JSON_UNESCAPED_UNICODE);
 
 print_r($resultJsonFile);
 
-return;
+return $resultJsonFile;
 
 
 
@@ -456,19 +494,7 @@ return;
 
 
 
-stage1('http://rent-scaner.ru/estate');
+           //   stage1('http://rent-scaner.ru/estate');
 
-//print_r($hentry);
-
-/*  foreach ($hentry as $el) {
-    $pq = pq($el); // Это аналог $ в jQuery
-    $pq->find('h2.entry-title > a.blog')->attr('href', 'http://%username%.habrahabr.ru/blog/')->html('%username%'); // меняем атрибуты найденого элемента
-    $pq->find('div.entry-info')->remove(); // удаляем ненужный элемент
-    $tags = $pq->find('ul.tags > li > a');
-    $tags->append(': ')->prepend(' :'); // добавляем двоеточия по бокам
-    $pq->find('div.content')->prepend('<br />')->prepend($tags); // добавляем контент в начало найденого элемента
-  }
-  
-  echo $hentry;*/
 
     ?>

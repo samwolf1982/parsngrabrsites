@@ -267,7 +267,7 @@ $linke=$arrElement['Источник']='******';
 
 
 
-
+/*
 
 
 
@@ -319,7 +319,7 @@ $arrElement['Район']='******';
 
 
 
-/*
+
 
 
 
@@ -498,8 +498,8 @@ $str=str_replace('>', '', $a15 ) ;
 $p_titleInfo=null;
 $p_titleInfo = $document->find($str);
 
-*/
 
+*/
 
 $mainArr[]=$arrElement;
 

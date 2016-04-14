@@ -2,11 +2,11 @@
 include_once 'library/includes/html_table.class.php';
 include_once 'lib.php';
 ?>
-
+<link href="library/css/ex.css" rel="stylesheet">
 <script src="library/vendor/jquery-1.7.2.min.js"></script>
 <script src="library/jquery.dynatable.js"></script>
 
-<link href="library/css/ex.css" rel="stylesheet">
+
   <button  onclick="addrentscanerRow()" ><img height="100"  width="120"  src="/img/dollar.png" alt="click me"  
           style="vertical-align: middle" > Rent scaner</button>
 
@@ -16,12 +16,48 @@ include_once 'lib.php';
 
        	function addrentscanerRow(argument) {
        		// body...
-       		console.log("FGHJK");
+
+
+
+       		//console.log("FGHJK");
        		var table = $('#rentabid ');    
        var r='<tr> <td>999 April 2016</td> <td>03:08:33</td> <td> Сегодня, 9:55 </td> <td>Авто</td> <td>******</td> <td>3 500 руб.</td> <td>******</td> <td>******</td> <td>ул.Костромская,д.6</td> <td>Бибирево</td> <td>Бибирево</td> <td>—</td> <td>—</td> <td>—</td> <td> Сдам машиноместо на длительный срок .Автостоянка,расположена между домом 6 и домом 10 по Костромской ул. </td> <td> Сдам машиноместо на длительный срок .Автостоянка,расположена между домом 6 и домом 10 по Костромской ул. </td> <td>Мария</td> <td>(905) 518-**-**</td> <td>********</td> <td>http://83.img.avito.st/1280x960/2554247283.jpg | http://02.img.avito.st/1280x960/2554247302.jpg | http://35.img.avito.st/1280x960/2554247335.jpg</td> <td>******</td> <td>******</td> <td>******</td> <td>******</td> <td>******</td> <td>******</td> <td>******</td> <td>******</td> <td>lorem lorem lorem | —</td> <td>—</td> <td>—</td> <td>Собственник</td> </tr>';
       // table.insertAfter(r, table.firstChild());
-      $('#rentabid tr:first-child').after(r);
+    //  $('#rentabid tr:first-child').after(r);
       // table.prepend(r);
+$.ajax({
+  type: "POST", //метод запроса, можно POST можно GET (если опустить, то по умолчанию GET)
+  url: "gogo2.php",
+ 
+  success: function(data) {     
+
+ //функция выполняется при удачном заверщение
+  //  console.log($.parseJSON(data));        //выведем в консоль содержимое test1
+  //console.log($.parseJSON(data).test2.test2_in); //выведем в консоль содержимое test2_in
+    //myRecords = (data);
+    var s='<tr>'
+    console.log("OK");
+
+    var obj = jQuery.parseJSON(data);
+    //alert(data);
+   // console.log(obj);
+    //console.log(obj[0].own);
+      //  $('#rentabid tr:first-child').after(data);
+for (property in obj[0]){
+   s+=('<td>'+   obj[0][property].toString().substr(0,200)+'</td>');
+
+}
+  s+='</tr>';
+  //console.log(s );
+  $('#rentabid tr:first-child').after(s);
+
+  }
+
+});
+
+
+
+
 
        	}
        </script>   
@@ -54,7 +90,23 @@ foreach ($v['tabnames'] as $key => $value) {
 	 $tbl->addRow();
      	foreach ($v['content'] as $key => $value) {
     		# code...
-    		  $tbl->addCell($value);
+        try {
+          if (is_array($value)) {
+
+            var_dump($key);
+            var_dump($value);
+     $tbl->addCell('my value array');
+                        # code...
+          }else{
+              $v=strip_tags($value);
+              $v=substr($v,0,100);
+              $tbl->addCell($v);
+            }
+        } catch (Exception $e) {
+          echo "Error 98   strip_tags";
+            print_r($value);
+        }
+    
     	}
  /*   	$tbl->addRow();
      	foreach ($v['content'] as $key => $value) {
@@ -165,6 +217,9 @@ foreach ($array as $line)
 
 return $resultarr;
 }
+
+
+
 
 
 

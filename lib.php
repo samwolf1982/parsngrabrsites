@@ -55,7 +55,31 @@ $a13 ='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > di
  // own
   $a15 ='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > span:nth-child(4)';
 //$a ='';
-//
+
+
+$type=null;
+ $description=null;
+  $price=null; 
+  $region=null; 
+  $punct=null;  // населний пункт
+   $street=null;
+    $bild=null; 
+    $metro=null;
+     $tometrowalk=null; 
+     $tometrocar=null;
+      $square=null; 
+      $floar=null; 
+      $floars=null; 
+       $totalroom=null; 
+       $rooms=null;
+        $name=null;
+         $fhone=null; 
+  $foto=null; $linke=null; $maya=null; $mayb=null; $mayc=null; $mayd=null; $maye=null; $mayf=null; $mayg=null; 
+
+
+
+
+
 //$a ='';
 //1 
 $str=str_replace('>', '', $a1) ;
@@ -77,12 +101,25 @@ $p_titleInfo = $document->find($a9);
  // clear all  class="col-md-6"
  $pq = pq($p_titleInfo);
 
-$arrElement['Тип']=$pq->text();
+$type=$arrElement['Тип']=$pq->text();
  //echo "$pq";
 
 
+//2 
+$str=null;
+$str=str_replace('>', '', $a2) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($str);
 
-$arrElement['Комнат в сделке']='******';
+//Debuger::dumper($p_titleInfo->text());
+//$arrElement['Описание']=$p_titleInfo->text();
+
+
+$description=$arrElement['Дополнительно']=$p_titleInfo->text();
+
+
+
+
 
 
 
@@ -96,13 +133,16 @@ $p_titleInfo = $document->find($a12);
  // clear all  class="col-md-6"
  $pq = pq($p_titleInfo);
 
-$arrElement['Цена']=$pq->text();
+$price=$arrElement['Цена']=$pq->text();
 
 
-$arrElement['Регион']='******';
-$arrElement['Район']='******';
 
 
+
+
+
+$region=$arrElement['Регион']='******';
+$punct=$arrElement['Нас. Пункт']='******';
 
 //3
 $str=null;
@@ -111,9 +151,8 @@ $p_titleInfo=null;
 $p_titleInfo = $document->find($str);
 
 //Debuger::dumper($p_titleInfo->text());
-$arrElement['Улица']=$p_titleInfo->text();
-
-
+$street=$arrElement['Улица']=$p_titleInfo->text();
+$bild= $arrElement['Дом №']='******';
 
 
 // metro  tr.detailed-advert:nth-child(1) > td:nth-child(13)
@@ -125,10 +164,21 @@ $p_titleInfo = $document->find($a5);
  // clear all  class="col-md-6"
  $pq = pq($p_titleInfo);
 
-$arrElement['Метро']=$pq->text();;
+$metro= $arrElement['Метро']=$pq->text();;
 
-$arrElement['До метро пешком']=$pq->text();
+$tometrowalk=$arrElement['До метро пешком']=$pq->text();
+$tometrocar=$arrElement['До метро трансп']=$pq->text();
 
+// 9 suare   tr.detailed-advert:nth-child(1) > td:nth-child(8) 
+$a9='tr.detailed-advert:nth-child(1) > td:nth-child(8)';
+$str=null;
+$str=str_replace('>', '', $a9) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a9);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+
+$square=$arrElement['Площадь']=$pq->text();
 
 
 
@@ -143,9 +193,7 @@ $p_titleInfo = $document->find($a7);
  // clear all  class="col-md-6"
  $pq = pq($p_titleInfo);
 
-$arrElement['Этаж']=$pq->text();
-
-
+$floar=$arrElement['Этаж']=$pq->text();
 
 //11 floars етажность   tr.detailed-advert:nth-child(1) > td:nth-child(7)
 $a11='tr.detailed-advert:nth-child(1) > td:nth-child(7)';
@@ -156,38 +204,13 @@ $p_titleInfo = $document->find($a11);
  // clear all  class="col-md-6"
  $pq = pq($p_titleInfo);
 
-$arrElement['Этажность']=$pq->text();
+$floars=$arrElement['Этажность']=$pq->text();
 
 
+$totalroom=$arrElement['Всего комнат']='******';
 
 
-// 9 suare   tr.detailed-advert:nth-child(1) > td:nth-child(8) 
-$a9='tr.detailed-advert:nth-child(1) > td:nth-child(8)';
-$str=null;
-$str=str_replace('>', '', $a9) ;
-$p_titleInfo=null;
-$p_titleInfo = $document->find($a9);
- // clear all  class="col-md-6"
- $pq = pq($p_titleInfo);
-
-$arrElement['Площадь']=$pq->text();
-
-
-
-
-//2 
-$str=null;
-$str=str_replace('>', '', $a2) ;
-$p_titleInfo=null;
-$p_titleInfo = $document->find($str);
-
-//Debuger::dumper($p_titleInfo->text());
-$arrElement['Описание']=$p_titleInfo->text();
-
-
-$arrElement['Доп. Описания']=$p_titleInfo->text();
-
-
+$rooms=$arrElement['Комнат в сделке']='******';
 
 
 //14 name tr.detailed-advert:nth-child(1) > td:nth-child(10)
@@ -199,13 +222,8 @@ $p_titleInfo = $document->find($a14);
  // clear all  class="col-md-6"
  $pq = pq($p_titleInfo);
 
-$arrElement['Имя']=$pq->text();
+$name=$arrElement['ФИО собственника']=$pq->text();
 
-
-
-
-
-//13  tel tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > span:nth-child(1)
 
 $a13='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > span:nth-child(1)';
 $str=null;
@@ -216,15 +234,7 @@ $p_titleInfo = $document->find($a13);
  $pq = pq($p_titleInfo);
 
 //echo $pq;
-$arrElement['Телефон']=$pq->text();
-
-
-
-
-
-$arrElement['Ссылка']='********';
-
-
+$fhone=$arrElement['Телефон']=$pq->text();
 
 
 
@@ -247,12 +257,83 @@ foreach ($p_titleInfo as $key => $value) {
 //echo $value;
   //var_dump ($value);
 }
-$arrElement['Фото_ссылка']=$arrfoto;
+$foto=$arrElement['Фото_ссылка']=$arrfoto;
+
+
+
+$linke=$arrElement['Источник']='******';
 
 
 
 
-$arrElement['Источник']='******';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$arrElement['Район']='******';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+
+
+$arrElement['Ссылка']='********';
+
+
+
+
+
+
+
+
+
+
 
 $arrElement['ID']='******';  
 $arrElement['Количество повторений']='******';
@@ -261,15 +342,9 @@ $arrElement['Базы с повторением']='******';
 
 $arrElement['1/0']='******';
 
-$arrElement['Нас. Пункт']='******';
 
-$arrElement['Дом №']='******';
-$arrElement['Всего комнат']='******';
-//$a4fordelete ='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) b';
 
-//$a4  ='tr.detailed-advert:nth-child(1)  td:nth-child(2) div:nth-child(2)  div:nth-child(1)  div:nth-child(1)  div:nth-child(3)  div:nth-child(1):nth-child(1)';
 
-//4 dearch b and remove
 //distrit
 $str=null;
 $str=str_replace('>', '', $a4fordelete) ;
@@ -284,32 +359,7 @@ $p_titleInfo = $document->find($str);// find element
 
  
   
-//      distric metro old
 
-/*$s=null;
-
-$s=htmlspecialchars_decode( htmlentities ($p_titleInfo));
-
-$s= str_replace('<div class="col-md-6">',' ' , $s);
-
-
-$strarr=explode('<br>',$s);
-
-try {
-
-  if(htmlentities ($strarr[1])==' &mdash;'){
-    $arrElement['district']='-----';
-  }else
-  $arrElement['district']=htmlentities ($strarr[1]);
-$arrElement['metro']=htmlspecialchars( htmlentities ($strarr[2]));
-
-
-
-} catch (Exception $e) {
-  echo "Error 345 ".e;
-}
-
-*/
 
 
 
@@ -333,18 +383,7 @@ $arrElement['distric']=$arrDistric;
 
 
 
-// metro
 
-
-
-
-
-
-//print_r($p_titleInfo);
-
-
-
-//$arrElement['foto_links']=$p_titleInfo;
 
 
 //789101012
@@ -365,12 +404,7 @@ $p_titleInfo = $document->find($str);
 $strarr=null;
 $strarr=array();
 $s=htmlspecialchars_decode( htmlentities ($p_titleInfo));
-//$s=htmlentities($p_titleInfo, ENT_QUOTES | ENT_IGNORE, "UTF-8",false);
-//$delimetr="::::::";
-//echo $s;
-//echo $s;
-//$s= str_replace('<div class="col-md-6">',' ' , $s);
-//$s= str_replace('<br>',$delimetr , $s);
+
 
  //   echo "$s";
 $strarr=null;
@@ -421,9 +455,6 @@ $arrElement['square']=$pq->text();
 
 
 
-
-//15 own   tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > span:nth-child(4)
-
 $a15='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > span:nth-child(4)
 ';
 $str=null;
@@ -436,22 +467,10 @@ $p_titleInfo = $document->find($a15);
 //echo $pq;
 $arrElement['own']=$pq->text();
 
-//$price[]=htmlentities ( $strarr[2]);
-//$arrElement['price']= htmlentities ( $strarr[2]);;
-
-//$arrElement['price']= isset( $strarr[2])?  $strarr[2]  :'---';
-//$arrElement['price']=htmlspecialchars( htmlentities ($strarr[2]));
-//$arrElement['price']=htmlspecialchars($strarr[2]);
-//var_dump($strarr);
 
 
 
 
-//Debuger::dumper($p_titleInfo->elements);
-//print_r($p_titleInfo->elements);
-//$arrElement['price_type_room_sqare_floor_floors']=$p_titleInfo;
-//echo $p_titleInfo;//
-//echo $pq;
 
 
 
@@ -463,9 +482,7 @@ $str=str_replace('>', '', $a13 ) ;
 $p_titleInfo=null;
 $p_titleInfo = $document->find($str);
 
-//Debuger::dumper($p_titleInfo->text());
-//print_r($p_titleInfo->elements);
-//$arrElement['tel']=$p_titleInfo->text();
+
 
 //14 name many info
 $str=null;
@@ -473,9 +490,7 @@ $str=str_replace('>', '', $a14 ) ;
 $p_titleInfo=null;
 $p_titleInfo = $document->find($str);
 
-//Debuger::dumper($p_titleInfo->text());
-//print_r($p_titleInfo->elements);
-//$arrElement['name']=$p_titleInfo->text();
+
 
 //15  own
 $str=null;
@@ -483,10 +498,7 @@ $str=str_replace('>', '', $a15 ) ;
 $p_titleInfo=null;
 $p_titleInfo = $document->find($str);
 
-//Debuger::dumper($p_titleInfo->text());
-//print_r($p_titleInfo->elements);
-//$arrElement['name']=$p_titleInfo->text();
-
+*/
 
 
 $mainArr[]=$arrElement;
@@ -495,11 +507,7 @@ $mainArr[]=$arrElement;
 
 $resultJsonFile=json_encode($mainArr, JSON_UNESCAPED_UNICODE);
 
-//jsontotable($resultJsonFile);
-//print_r($resultJsonFile);
-//Debuger::dumper($mainArr);
 
-//print_r($resultJsonFile);
 
 return $resultJsonFile;
 
@@ -511,14 +519,6 @@ return $resultJsonFile;
 
 
 
-//$resultJsonFile=json_encode($mainArr, JSON_UNESCAPED_UNICODE);
-
-
-//$myFile = "resJsonFile.txt";
-//$fh = fopen($myFile, 'w') or die("can't open file");
-
-//fwrite($fh, $resultJsonFile);
-//fclose($fh);
 //print_r($mainArr[1]);
 }
 

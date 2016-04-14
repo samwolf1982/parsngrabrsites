@@ -1,0 +1,166 @@
+<?php 
+include_once 'library/includes/html_table.class.php';
+?>
+
+<link href="library/css/ex.css" rel="stylesheet">
+  <button  ><img height="100"  width="120"  src="/img/dollar.png" alt="click me"  
+          style="vertical-align: middle" onclick="addrentscanerRow()"> Rent scaner</button></p>
+
+       <script type="text/javascript">
+       	
+
+       	function addrentscanerRow(argument) {
+       		// body...
+       		
+       	}
+       </script>   
+<?php
+
+$arr ='[{"Дата":"14 April 2016","Время":"03:08:33","Время публикации":"\n  Сегодня, 9:55 \n","Тип":"Авто","Комнат в сделке":"******","Цена":"3 500 руб.","Регион":"******","Район":"******","Улица":"ул.Костромская,д.6","Метро":"Бибирево","До метро пешком":"Бибирево","Этаж":"—","Этажность":"—","Площадь":"—","Описание":"\n                    Сдам машиноместо на длительный срок .Автостоянка,расположена между домом 6 и домом 10 по Костромской ул.\n                ","Доп. Описания":"\n                    Сдам машиноместо на длительный срок .Автостоянка,расположена между домом 6 и домом 10 по Костромской ул.\n                ","Имя":"Мария","Телефон":"(905) 518-**-**","Ссылка":"********","Фото_ссылка":["http:\/\/83.img.avito.st\/1280x960\/2554247283.jpg","http:\/\/02.img.avito.st\/1280x960\/2554247302.jpg","http:\/\/35.img.avito.st\/1280x960\/2554247335.jpg"],"Источник":"******","ID":"******","Количество повторений":"******","Базы с повторением":"******","1\/0":"******","Нас. Пункт":"******","Дом №":"******","Всего комнат":"******","distric":{"location":"lorem lorem lorem","link_adress":"—"},"room":"—","square":"—","own":"Собственник"}]';
+$v=jsontocsv($arr,' | ' );
+
+/*echo implode("|||||",  $v['tabnames'] );
+echo "<br<br><br><br>>";
+echo implode("|||||",  $v['content'] );
+*/
+$PRODUCTS = array(
+    'choc_chip' => array('Chocolate Chip Cookies', 1.25, 10.00),
+    'oatmeal' => array('Oatmeal Cookies', .99, 8.25),
+    'brownies' => array('Fudge Brownies', 1.35, 12.00)
+);
+
+// arguments: id, class
+// can include associative array of optional additional attributes
+$tbl = new HTML_Table('', 'demoTbl');
+$tbl->addCaption('Отчет', 'cap', array('id'=> 'tblCap') );
+
+$tbl->addRow();
+    // arguments: cell content, class, type (default is 'data' for td, pass 'header' for th)
+    // can include associative array of optional additional attributes
+foreach ($v['tabnames'] as $key => $value) {
+	# code...
+	    $tbl->addCell($value, '', 'header');
+}
+ /*   $tbl->addCell('Product', 'first', 'header');
+    $tbl->addCell('Single Item', '', 'header');
+    $tbl->addCell('1 Dozen', '', 'header');
+    */
+	 $tbl->addRow();
+     	foreach ($v['content'] as $key => $value) {
+    		# code...
+    		  $tbl->addCell($value);
+    	}
+ /*   	$tbl->addRow();
+     	foreach ($v['content'] as $key => $value) {
+    		# code...
+    		  $tbl->addCell($value);
+    	}*/
+
+    
+$tbl->addRow();
+  //  $tbl->addCell('All so very yummy!', 'foot', 'data', array('colspan'=>3) );
+    
+echo $tbl->display();
+
+
+
+
+
+
+//foreach (jsontocsv($arr,' | ' ) as $key => $value) {
+	# code...
+
+	      //print_r($value) ;
+	      //echo "<br>";
+// echo  implode( $value);
+//}
+
+
+
+function jsontocsv($value='',$separator)
+{
+  # code...
+/*
+* Convert JSON file to CSV and output it.
+*
+* JSON should be an array of objects, dictionaries with simple data structure
+* and the same keys in each object.
+* The order of keys it took from the first element.
+*
+* Example:
+* json:
+* [
+*  { "key1": "value", "kye2": "value", "key3": "value" },
+*  { "key1": "value", "kye2": "value", "key3": "value" },
+*  { "key1": "value", "kye2": "value", "key3": "value" }
+* ]
+*
+* The csv output: (keys will be used for first row):
+* 1. key1, key2, key3
+* 2. value, value, value
+* 3. value, value, value
+* 4. value, value, value
+*
+* Uses:
+* json-to-csv.php file.json > file.csv
+*/
+//if (empty($value) die("The json file name or URL is missed\n");
+//$jsonFilename = $value;
+//$json = file_get_contents($jsonFilename);
+$array = json_decode($value, true);
+//$f = fopen('php://output', 'w');
+$firstLineKeys = false;
+$resultarr=array();
+
+foreach ($array as $key => $value) {
+	# code...
+     foreach ($value as $key => $value) {
+     
+     $resultarr['tabnames'][]=$key;
+     
+     }
+      break;       
+	
+}
+
+
+foreach ($array as $line)
+{
+
+
+	foreach ($line as $key => $value) {
+		# code...
+    // echo "$value .<br>";           
+            
+	 if(	is_array($value)) {
+	 	$a=array();
+			 foreach ($value as $key1 => $value1) {
+			 	# code...
+			 	  $a[]=$value1;
+			 	 // echo "$key $key1  :   $value1   <br>";
+	    $value= implode($separator, $a);		  
+			 }
+		}
+
+ $resultarr['content'][]=$value;
+	    //echo "$key  :   $value   <br>";
+	}
+
+
+
+  {
+    //$firstLineKeys = array_keys($line);
+    //fputcsv($f, $firstLineKeys);
+  //  $firstLineKeys = array_flip($firstLineKeys);
+  }
+  // Using array_merge is important to maintain the order of keys acording to the first element
+//  fputcsv($f, array_merge($firstLineKeys, $line));
+}
+
+return $resultarr;
+}
+
+
+
+
+ ?>

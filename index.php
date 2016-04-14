@@ -6,6 +6,7 @@
 
 ?>
 <script src="library/vendor/jquery-1.7.2.min.js"></script>
+<link href="library/css/ex.css" rel="stylesheet">
 <script src="library/jquery.dynatable.js"></script>
 <script type='text/javascript'>
 //формируем JSON
@@ -622,7 +623,10 @@ return $resultJsonFile;
 
 
 
+
+
               stage1('http://rent-scaner.ru/estate');
+
 
 
     ?>

@@ -24,36 +24,73 @@
       //  var e = document.getElementById('testForm'); e.action='test.php'; e.submit();
 function go2(argument) {
 
+
+
 $.ajax({
-  url: 'gogo.php',
-  success: function(data){
-    $('#my-final-table').dynatable({
-      dataset: {
-        records: data
-      }
-    });
+  type: "POST", //метод запроса, можно POST можно GET (если опустить, то по умолчанию GET)
+  url: "gogo.php",
+ 
+  success: function(data) {     
+
+                  //функция выполняется при удачном заверщение
+  //  console.log($.parseJSON(data));        //выведем в консоль содержимое test1
+  //console.log($.parseJSON(data).test2.test2_in); //выведем в консоль содержимое test2_in
+
+    myRecords = (data);
+$('#my-final-table').dynatable({
+  dataset: {
+    records: myRecords
   }
 });
 
-console.log("GHJKL");
+
+//console.log(data);
 
 
+
+console.log("load");
+
+  }
+
+
+
+
+//console.log("GHJKL");
+
+
+});
 }
-
       </script>
       
 
+
+  <p style="text-align: center"><button>Кнопка с текстом</button>
+  <button><img src="" alt="click me"  
+          style="vertical-align: middle" onclick="go2()"> click me</button></p>
 <table id="my-final-table">
   <thead>
+    <th>Band</th>
+    <th>Song</th>
+    <th>Band</th>
+    <th>Song</th>
+    <th>Band</th>
+    <th>Song</th>
+    <th>Band</th>
+    <th>Song</th>
+    <th>Band</th>
+    <th>Song</th>
+    <th>Band</th>
+    <th>Song</th>
+    <th>Band</th>
+    <th>Song</th>
     <th>Band</th>
     <th>Song</th>
   </thead>
   <tbody>
   </tbody>
 </table>
-  <p style="text-align: center"><button>Кнопка с текстом</button>
-  <button><img src="" alt="click me"  
-          style="vertical-align: middle" onclick="go2()"> click me</button></p>
+
+
 <?php
 
 
@@ -123,8 +160,117 @@ $str=str_replace('>', '', $a1) ;
 $p_titleInfo = $document->find($str);
 
 //Debuger::dumper($p_titleInfo->text());
-$arrElement['curent_time']= date("d F Y"). "  ".date("H:i:s");;
-$arrElement['time_publish']=$p_titleInfo->text();
+$arrElement['Дата']= date("d F Y");
+$arrElement['Время']= date("H:i:s");
+$arrElement['Время публикации']= $p_titleInfo->text();
+//$arrElement['time_publish']=$p_titleInfo->text();
+
+// тип
+// type 
+
+$str=null;
+$str=str_replace('>', '', $a9) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a9);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+
+$arrElement['Тип']=$pq->text();
+ //echo "$pq";
+
+
+
+$arrElement['Комнат в сделке']='******';
+
+
+
+
+//price
+$a12='tr.detailed-advert:nth-child(1) > td:nth-child(4)';
+$str=null;
+$str=str_replace('>', '', $a12) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a12);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+
+$arrElement['Цена']=$pq->text();
+
+
+$arrElement['Регион']='******';
+$arrElement['Район']='******';
+
+
+
+//3
+$str=null;
+$str=str_replace('>', '', $a3) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($str);
+
+//Debuger::dumper($p_titleInfo->text());
+$arrElement['Улица']=$p_titleInfo->text();
+
+
+
+
+// metro  tr.detailed-advert:nth-child(1) > td:nth-child(13)
+$a5='tr.detailed-advert:nth-child(1) > td:nth-child(13)';
+$str=null;
+$str=str_replace('>', '', $a5) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a5);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+
+$arrElement['Метро']=$pq->text();;
+
+$arrElement['До метро пешком']=$pq->text();
+
+
+
+
+
+
+// 7 floar етажн  tr.detailed-advert:nth-child(1) > td:nth-child(6)
+$a7='tr.detailed-advert:nth-child(1) > td:nth-child(6)';
+$str=null;
+$str=str_replace('>', '', $a7) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a7);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+
+$arrElement['Этаж']=$pq->text();
+
+
+
+//11 floars етажность   tr.detailed-advert:nth-child(1) > td:nth-child(7)
+$a11='tr.detailed-advert:nth-child(1) > td:nth-child(7)';
+$str=null;
+$str=str_replace('>', '', $a11) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a11);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+
+$arrElement['Этажность']=$pq->text();
+
+
+
+
+// 9 suare   tr.detailed-advert:nth-child(1) > td:nth-child(8) 
+$a9='tr.detailed-advert:nth-child(1) > td:nth-child(8)';
+$str=null;
+$str=str_replace('>', '', $a9) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a9);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+
+$arrElement['Площадь']=$pq->text();
+
+
 
 
 //2 
@@ -134,20 +280,89 @@ $p_titleInfo=null;
 $p_titleInfo = $document->find($str);
 
 //Debuger::dumper($p_titleInfo->text());
-$arrElement['description']=$p_titleInfo->text();
+$arrElement['Описание']=$p_titleInfo->text();
 
-//3
+
+$arrElement['Доп. Описания']=$p_titleInfo->text();
+
+
+
+
+//14 name tr.detailed-advert:nth-child(1) > td:nth-child(10)
+$a14='tr.detailed-advert:nth-child(1) > td:nth-child(10)';
 $str=null;
-$str=str_replace('>', '', $a3) ;
+$str=str_replace('>', '', $a14) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a14);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+
+$arrElement['Имя']=$pq->text();
+
+
+
+
+
+//13  tel tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > span:nth-child(1)
+
+$a13='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > span:nth-child(1)';
+$str=null;
+$str=str_replace('>', '', $a13) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a13);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+
+echo $pq;
+$arrElement['Телефон']=$pq->text();
+
+
+
+
+
+$arrElement['Ссылка']='********';
+
+
+
+
+
+//6 foto
+
+$str=null;
+$str=str_replace('>', '', $a6) ;
 $p_titleInfo=null;
 $p_titleInfo = $document->find($str);
 
-//Debuger::dumper($p_titleInfo->text());
-$arrElement['link_at_map_adress']=$p_titleInfo->text();
+//Debuger::dumper($p_titleInfo->elements);
+//echo $p_titleInfo;
+$arrfoto=array();
+//  echo "$p_titleInfo";
+foreach ($p_titleInfo as $key => $value) {
+      $pq = pq($value);
+      $arrfoto[]=  $pq->attr('href');
+  # code...
+//  echo "$p_titleInfo";
+//echo $value;
+  //var_dump ($value);
+}
+$arrElement['Фото_ссылка']=$arrfoto;
 
 
 
 
+$arrElement['Источник']='******';
+
+$arrElement['ID']='******';  
+$arrElement['Количество повторений']='******';
+
+$arrElement['Базы с повторением']='******';
+
+$arrElement['1/0']='******';
+
+$arrElement['Нас. Пункт']='******';
+
+$arrElement['Дом №']='******';
+$arrElement['Всего комнат']='******';
 //$a4fordelete ='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) b';
 
 //$a4  ='tr.detailed-advert:nth-child(1)  td:nth-child(2) div:nth-child(2)  div:nth-child(1)  div:nth-child(1)  div:nth-child(3)  div:nth-child(1):nth-child(1)';
@@ -214,16 +429,7 @@ $arrDistric['link_adress']=$pq->text();
 //echo "pq->text()";
 $arrElement['distric']=$arrDistric;
 
-// metro  tr.detailed-advert:nth-child(1) > td:nth-child(13)
-$a5='tr.detailed-advert:nth-child(1) > td:nth-child(13)';
-$str=null;
-$str=str_replace('>', '', $a5) ;
-$p_titleInfo=null;
-$p_titleInfo = $document->find($a5);
- // clear all  class="col-md-6"
- $pq = pq($p_titleInfo);
 
-$arrElement['metro']=$pq->text();;
 
 // metro
 
@@ -231,26 +437,7 @@ $arrElement['metro']=$pq->text();;
 
 
 
-//6 foto
 
-$str=null;
-$str=str_replace('>', '', $a6) ;
-$p_titleInfo=null;
-$p_titleInfo = $document->find($str);
-
-//Debuger::dumper($p_titleInfo->elements);
-//echo $p_titleInfo;
-$arrfoto=array();
-//  echo "$p_titleInfo";
-foreach ($p_titleInfo as $key => $value) {
-      $pq = pq($value);
-      $arrfoto[]=  $pq->attr('href');
-  # code...
-//  echo "$p_titleInfo";
-//echo $value;
-  //var_dump ($value);
-}
-$arrElement['foto']=$arrfoto;
 //print_r($p_titleInfo);
 
 
@@ -292,30 +479,11 @@ foreach ($strarr as $key => $value) {
   //echo "$value";
 }
 
-// type 
-
-$str=null;
-$str=str_replace('>', '', $a9) ;
-$p_titleInfo=null;
-$p_titleInfo = $document->find($a9);
- // clear all  class="col-md-6"
- $pq = pq($p_titleInfo);
-
-$arrElement['type']=$pq->text();
- //echo "$pq";
 
 
 
-//price
-$a12='tr.detailed-advert:nth-child(1) > td:nth-child(4)';
-$str=null;
-$str=str_replace('>', '', $a12) ;
-$p_titleInfo=null;
-$p_titleInfo = $document->find($a12);
- // clear all  class="col-md-6"
- $pq = pq($p_titleInfo);
 
-$arrElement['price']=$pq->text();
+
 
 
 //10 room  tr.detailed-advert:nth-child(1) > td:nth-child(5)
@@ -331,27 +499,9 @@ $p_titleInfo = $document->find($a10);
 $arrElement['room']=$pq->text();
 
 
-//11 floars етажность   tr.detailed-advert:nth-child(1) > td:nth-child(7)
-$a11='tr.detailed-advert:nth-child(1) > td:nth-child(7)';
-$str=null;
-$str=str_replace('>', '', $a11) ;
-$p_titleInfo=null;
-$p_titleInfo = $document->find($a11);
- // clear all  class="col-md-6"
- $pq = pq($p_titleInfo);
 
-$arrElement['floars']=$pq->text();
 
-// 7 floar етажн  tr.detailed-advert:nth-child(1) > td:nth-child(6)
-$a7='tr.detailed-advert:nth-child(1) > td:nth-child(6)';
-$str=null;
-$str=str_replace('>', '', $a7) ;
-$p_titleInfo=null;
-$p_titleInfo = $document->find($a7);
- // clear all  class="col-md-6"
- $pq = pq($p_titleInfo);
 
-$arrElement['floar']=$pq->text();
 
 // 9 suare   tr.detailed-advert:nth-child(1) > td:nth-child(8) 
 $a9='tr.detailed-advert:nth-child(1) > td:nth-child(8)';
@@ -365,29 +515,7 @@ $p_titleInfo = $document->find($a9);
 $arrElement['square']=$pq->text();
 
 
-//14 name tr.detailed-advert:nth-child(1) > td:nth-child(10)
-$a14='tr.detailed-advert:nth-child(1) > td:nth-child(10)';
-$str=null;
-$str=str_replace('>', '', $a14) ;
-$p_titleInfo=null;
-$p_titleInfo = $document->find($a14);
- // clear all  class="col-md-6"
- $pq = pq($p_titleInfo);
 
-$arrElement['name']=$pq->text();
-
-//13  tel tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > span:nth-child(1)
-
-$a13='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > span:nth-child(1)';
-$str=null;
-$str=str_replace('>', '', $a13) ;
-$p_titleInfo=null;
-$p_titleInfo = $document->find($a13);
- // clear all  class="col-md-6"
- $pq = pq($p_titleInfo);
-
-echo $pq;
-$arrElement['tel']=$pq->text();
 
 
 
@@ -494,7 +622,7 @@ return $resultJsonFile;
 
 
 
-           //   stage1('http://rent-scaner.ru/estate');
+              stage1('http://rent-scaner.ru/estate');
 
 
     ?>

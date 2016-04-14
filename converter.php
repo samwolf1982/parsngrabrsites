@@ -1,38 +1,44 @@
 <?php 
 include_once 'library/includes/html_table.class.php';
+include_once 'lib.php';
 ?>
 
+<script src="library/vendor/jquery-1.7.2.min.js"></script>
+<script src="library/jquery.dynatable.js"></script>
+
 <link href="library/css/ex.css" rel="stylesheet">
-  <button  ><img height="100"  width="120"  src="/img/dollar.png" alt="click me"  
-          style="vertical-align: middle" onclick="addrentscanerRow()"> Rent scaner</button></p>
+  <button  onclick="addrentscanerRow()" ><img height="100"  width="120"  src="/img/dollar.png" alt="click me"  
+          style="vertical-align: middle" > Rent scaner</button>
+
 
        <script type="text/javascript">
        	
 
        	function addrentscanerRow(argument) {
        		// body...
-       		
+       		console.log("FGHJK");
+       		var table = $('#rentabid ');    
+       var r='<tr> <td>999 April 2016</td> <td>03:08:33</td> <td> Сегодня, 9:55 </td> <td>Авто</td> <td>******</td> <td>3 500 руб.</td> <td>******</td> <td>******</td> <td>ул.Костромская,д.6</td> <td>Бибирево</td> <td>Бибирево</td> <td>—</td> <td>—</td> <td>—</td> <td> Сдам машиноместо на длительный срок .Автостоянка,расположена между домом 6 и домом 10 по Костромской ул. </td> <td> Сдам машиноместо на длительный срок .Автостоянка,расположена между домом 6 и домом 10 по Костромской ул. </td> <td>Мария</td> <td>(905) 518-**-**</td> <td>********</td> <td>http://83.img.avito.st/1280x960/2554247283.jpg | http://02.img.avito.st/1280x960/2554247302.jpg | http://35.img.avito.st/1280x960/2554247335.jpg</td> <td>******</td> <td>******</td> <td>******</td> <td>******</td> <td>******</td> <td>******</td> <td>******</td> <td>******</td> <td>lorem lorem lorem | —</td> <td>—</td> <td>—</td> <td>Собственник</td> </tr>';
+      // table.insertAfter(r, table.firstChild());
+      $('#rentabid tr:first-child').after(r);
+      // table.prepend(r);
+
        	}
        </script>   
 <?php
 
 $arr ='[{"Дата":"14 April 2016","Время":"03:08:33","Время публикации":"\n  Сегодня, 9:55 \n","Тип":"Авто","Комнат в сделке":"******","Цена":"3 500 руб.","Регион":"******","Район":"******","Улица":"ул.Костромская,д.6","Метро":"Бибирево","До метро пешком":"Бибирево","Этаж":"—","Этажность":"—","Площадь":"—","Описание":"\n                    Сдам машиноместо на длительный срок .Автостоянка,расположена между домом 6 и домом 10 по Костромской ул.\n                ","Доп. Описания":"\n                    Сдам машиноместо на длительный срок .Автостоянка,расположена между домом 6 и домом 10 по Костромской ул.\n                ","Имя":"Мария","Телефон":"(905) 518-**-**","Ссылка":"********","Фото_ссылка":["http:\/\/83.img.avito.st\/1280x960\/2554247283.jpg","http:\/\/02.img.avito.st\/1280x960\/2554247302.jpg","http:\/\/35.img.avito.st\/1280x960\/2554247335.jpg"],"Источник":"******","ID":"******","Количество повторений":"******","Базы с повторением":"******","1\/0":"******","Нас. Пункт":"******","Дом №":"******","Всего комнат":"******","distric":{"location":"lorem lorem lorem","link_adress":"—"},"room":"—","square":"—","own":"Собственник"}]';
-$v=jsontocsv($arr,' | ' );
 
-/*echo implode("|||||",  $v['tabnames'] );
-echo "<br<br><br><br>>";
-echo implode("|||||",  $v['content'] );
-*/
-$PRODUCTS = array(
-    'choc_chip' => array('Chocolate Chip Cookies', 1.25, 10.00),
-    'oatmeal' => array('Oatmeal Cookies', .99, 8.25),
-    'brownies' => array('Fudge Brownies', 1.35, 12.00)
-);
 
-// arguments: id, class
-// can include associative array of optional additional attributes
-$tbl = new HTML_Table('', 'demoTbl');
-$tbl->addCaption('Отчет', 'cap', array('id'=> 'tblCap') );
+//$v=jsontocsv($arr,' | ' );
+
+$v= jsontocsv(  stage1('http://rent-scaner.ru/estate'),' | ');
+ //echo "$res";     
+//$v=jsontocsv($v,' | ' );
+
+
+$tbl = new HTML_Table('rentabid', 'demoTbl');
+//$tbl->addCaption('Отчет', 'cap', array('id'=> 'tblCap') );
 
 $tbl->addRow();
     // arguments: cell content, class, type (default is 'data' for td, pass 'header' for th)
@@ -116,7 +122,7 @@ foreach ($array as $key => $value) {
 	# code...
      foreach ($value as $key => $value) {
      
-     $resultarr['tabnames'][]=$key;
+     $resultarr['tabnames'][]= $key;
      
      }
       break;       

@@ -2,6 +2,7 @@
 
    require_once ('phpQuery/phpQuery/phpQuery.php');
    include_once 'debug/debug.php';
+      include_once 'db.php';
 
 function stage1($value='')
 {
@@ -74,7 +75,9 @@ $type=null;
        $rooms=null;
         $name=null;
          $fhone=null; 
-  $foto=null; $linke=null; $maya=null; $mayb=null; $mayc=null; $mayd=null; $maye=null; $mayf=null; $mayg=null; 
+  $foto=null;
+   $linke=null;
+    $maya=null; $mayb=null; $mayc=null; $mayd=null; $maye=null; $mayf=null; $mayg=null; 
 
 
 
@@ -265,8 +268,17 @@ $linke=$arrElement['Источник']='******';
 
 
 
+ $maya='*******'; $mayb='*******'; $mayc='*******'; $mayd='*******'; $maye='*******'; $mayf='*******'; $mayg='*******'; 
+   $foto="Array here !!!!";
 
+ //echo "$type";
+writetodb('1985-12-12', (string)$type,(string) $description,(string) $price, $region, (string)$punct, (string)$street,(string) $bild,(string) $metro,(string) $tometrowalk, (string)$tometrocar, (string)$square, (string)$floar,(string) $floars, (string)$totalroom, (string)$rooms,(string) $name,(string) $fhone, 
+  (string)$foto,(string) $linke, (string)$maya,(string) $mayb,(string) $mayc, (string)$mayd, (string)$maye, (string)$mayf, (string)$mayg );
+//$d=cleardata("lorte");
 
+//writetodb($d ,'123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123');
+
+//writetodb( cleardata('lorem'),'123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123');
 /*
 
 

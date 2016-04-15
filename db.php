@@ -1,13 +1,13 @@
 <?php
 
-workwithDB('123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123');
+//writetodb('123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123');
 
-function workwithDB($type, $description, $price, $region, $punct, $street, $bild, $metro, $tometrowalk, $tometrocar, $square, $floar, $floars, $totalroom, $rooms, $name, $fhone, 
+function writetodb($dayer,$typeqwer, $description, $price, $region, $punct, $street, $bild, $metro, $tometrowalk, $tometrocar, $square, $floar, $floars, $totalroom, $rooms, $name, $fhone, 
 	$foto, $linke, $maya, $mayb, $mayc, $mayd, $maye, $mayf, $mayg )
 {
   # code...
   // Данные для mysql сервера
-$dbhost = "localhost"; // Хост
+$dbhost = "127.0.0.1"; // Хост
 $dbuser = "root"; // Имя пользователя
 $dbpassword = ""; // Пароль
 $dbname = "testwp1"; // Имя базы данных
@@ -15,31 +15,53 @@ $dbname = "testwp1"; // Имя базы данных
 // Подключаемся к mysql серверу
 $link = mysql_connect($dbhost, $dbuser, $dbpassword);
 
+/* Открыть соединение */
+$link = mysqli_connect("127.0.0.1", "root", "", "testwp1");
+
+/* проверка соединения */
+if (mysqli_connect_errno()) {
+    printf("Не удалось подключиться: %s\n", mysqli_connect_error());
+    exit();
+}
+//print_r( mysqli_character_set_name ( $link ));
+mysqli_set_charset($link, "utf8");
+
+//print_r( mysqli_character_set_name ( $link ));
+
+
+//mysql_query("SET character_set_connection='cp1251_general_ci'");
+//mysql_query("SET character_set_database='cp1251_general_ci'");
+//mysql_query("SET character_set_results='cp1251_general_ci'");
+#	 mysql_query("SET character_set_server='utf8'");
+#	 mysql_query("SET character_set_system='utf8'");
+#	 mysql_query("SET character_set_client='utf8'");
 // Выбираем нашу базу данных
-mysql_select_db($dbname, $link);
+//mysqli_select_db($dbname, $link);
 
-// Создаём таблицу customer
-// т.е. делаем sql запрос
-/*$sql=" insert into `main`( `type`, `description`, `price`, `region`, `punct`, `street`, `bild`, `metro`, `tometrowalk`, `tometrocar`, `square`, `floar`, `floars`, `totalroom`, `rooms`, `name`, `fhone`, `foto`, `link`, `maya`, `mayb`, `mayc`, `mayd`, `maye`, `mayf`, `mayg`) value ($type, $description, $price, $region, $punct, $street, $bild, $metro, $tometrowalk, $tometrocar, $square, $floar, $floars, $totalroom, $rooms, $name, $fhone, $foto, $link, $maya, $mayb, $mayc, $mayd, $maye, $mayf, $mayg)";*/
+    //mysql_query('SET NAMES cp1251', $link);          
+    //mysql_query('SET CHARACTER SET cp1251', $link);  
+  //  mysql_query('SET COLLATION_CONNECTION="utf8_general_ci"', $link);
 
+//mysql_query('SET NAMES utf8');
+$sql=" insert into `main`(`day`, `type`, `description`, `price`, `region`, `punct`, `street`,`bild`, `metro`, `tometrowalk`, `tometrocar`, `square`, `floar`, `floars`, `totalroom`, `rooms`, `name`, `fhone`, `foto`,`link`,`maya`, `mayb`, `mayc`, `mayd`, `maye`, `mayf`, `mayg` ) value ('$dayer', '$typeqwer', '$description', '$price', '$region', '$punct', '$street', '$bild', '$metro', '$tometrowalk', '$tometrocar', '$square', '$floar', '$floars' , '$totalroom', '$rooms', '$name', '$fhone', '$foto', '$linke', '$maya', '$mayb', '$mayc', '$mayd', '$maye', '$mayf', '$mayg')";
 
+//INSERT INTO `main`(`day`) VALUES ('1985-12-12')
 
-/*$sql=" insert into `main`( `type`, `description`, `price`, `region`, `punct`, `street`, `bild`, `metro`, `tometrowalk`, `tometrocar`, `square`, `floar`, `floars`, `totalroom`, `rooms`, `name`, `fhone`, `foto`, `link`, `maya`, `mayb`, `mayc`, `mayd`, `maye`, `mayf`, `mayg`) values (".$type."," .$description.",". $price.",". $region.",". $punct.",". $street."," .
-$bild.",". $metro.",". $tometrowalk.",". $tometrocar.",". $square.",". $floar.",". $floars.",". $totalroom.",". $rooms.",". $name.",". $fhone.",". $foto.",". $link.",". $maya.",". $mayb.",". $mayc.",". $mayd.",". $maye.",". $mayf.",". $mayg.")";*/
-
-//$sql=" insert into `main`( `type`) values (".$type."," .$description.",". $price.",". $region.",". $punct.",". $street.")";
-
-$sql=" insert into `main`( `type`, `description`, `price`, `region`, `punct`, `street`,`bild`, `metro`, `tometrowalk`, `tometrocar`, `square`, `floar`, `floars`, `totalroom`, `rooms`, `name`, `fhone`, `foto`,`link`,`maya`, `mayb`, `mayc`, `mayd`, `maye`, `mayf`, `mayg` ) value ($type, $description, $price, $region, $punct, $street, $bild, $metro, $tometrowalk, $tometrocar, $square, $floar, $floars , $totalroom, $rooms, $name, $fhone, $foto, $linke, $maya, $mayb, $mayc, $mayd, $maye, $mayf, $mayg)";
-
+//$s="rtyui";
+//$sql=" insert into `main`( `type` ) values ('$s')";
+//$sql="insert into `main`( `type`) values (56)";
+//echo "DB $type";
+//$sql=" insert into `main`( `type` ) value ($type)";
+//$sql="insert into `main`('type') values ('edfkerjkfkwe')";
 
 //$sql="insert into `main`(`link`) values ('cfguy')";
 //$query = "create table customer (id int(2) primary key
 //auto_increment, name varchar(100), tel varchar(20))";
-mysql_query($sql, $link);
+ mysqli_query($link,$sql)or die (mysql_error());
+//mysql_query($sql, $link)  
 
 // Закрываем соединение
-mysql_close($link);
-
+mysqli_close($link);
 
 // Подключаемся к mysql серверу
 //$link = mysql_connect($dbhost, $dbuser, $dbpassword);
@@ -58,7 +80,13 @@ mysql_close($link);
 //mysql_close($link);
 }
 
-
+function cleardata($var){
+    $var = stripcslashes($var);
+    $var = htmlentities($var);
+    $var = strip_tags($var);
+    $var = mysql_real_escape_string($var);
+    return $var;
+}
 
 
   ?>

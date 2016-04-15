@@ -37,6 +37,7 @@ $.ajax({
     //myRecords = (data);
     var s='<tr>'
     console.log("OK");
+        console.log(data);
 
     var obj = jQuery.parseJSON(data);
     //alert(data);

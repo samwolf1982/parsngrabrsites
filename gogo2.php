@@ -9,7 +9,7 @@ include_once 'lib.php';
 
 
 
-$res=stage1('http://rent-scaner.ru/estate');
+$res=stage1('http://rent-scaner.ru/estate','1901-12-31','Москва подмосков','Москва');
 echo ( $res );
 
 ?>

@@ -69,7 +69,7 @@ $arr ='[{"Дата":"14 April 2016","Время":"03:08:33","Время публ
 
 //$v=jsontocsv($arr,' | ' );
 
-$v= jsontocsv(  stage1('http://rent-scaner.ru/estate'),' | ');
+$v= jsontocsv(  stage1('http://rent-scaner.ru/estate','1900-12-31','Москва подмосков','Москва'),' | ');
  //echo "$res";     
 //$v=jsontocsv($v,' | ' );
 

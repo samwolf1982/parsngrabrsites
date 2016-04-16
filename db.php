@@ -2,7 +2,7 @@
 
 //writetodb('123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123');
 
-function writetodb($dayer,$typeqwer, $description, $price, $region, $punct, $street, $bild, $metro, $tometrowalk, $tometrocar, $square, $floar, $floars, $totalroom, $rooms, $name, $fhone, 
+function writetodb($dayer,$timerest,$typeqwer, $description, $price, $region, $punct, $street, $bild, $metro, $tometrowalk, $tometrocar, $square, $floar, $floars, $totalroom, $rooms, $name, $fhone, 
 	$foto, $linke, $maya, $mayb, $mayc, $mayd, $maye, $mayf, $mayg )
 {
   # code...
@@ -43,7 +43,7 @@ mysqli_set_charset($link, "utf8");
   //  mysql_query('SET COLLATION_CONNECTION="utf8_general_ci"', $link);
 
 //mysql_query('SET NAMES utf8');
-$sql=" insert into `main`(`day`, `type`, `description`, `price`, `region`, `punct`, `street`,`bild`, `metro`, `tometrowalk`, `tometrocar`, `square`, `floar`, `floars`, `totalroom`, `rooms`, `name`, `fhone`, `foto`,`link`,`maya`, `mayb`, `mayc`, `mayd`, `maye`, `mayf`, `mayg` ) value ('$dayer', '$typeqwer', '$description', '$price', '$region', '$punct', '$street', '$bild', '$metro', '$tometrowalk', '$tometrocar', '$square', '$floar', '$floars' , '$totalroom', '$rooms', '$name', '$fhone', '$foto', '$linke', '$maya', '$mayb', '$mayc', '$mayd', '$maye', '$mayf', '$mayg')";
+$sql=" insert into `main`(`day`, `time`, `type`, `description`, `price`, `region`, `punct`, `street`,`bild`, `metro`, `tometrowalk`, `tometrocar`, `square`, `floar`, `floars`, `totalroom`, `rooms`, `name`, `fhone`, `foto`,`link`,`maya`, `mayb`, `mayc`, `mayd`, `maye`, `mayf`, `mayg` ) value ('$dayer', '$timerest', '$typeqwer', '$description', '$price', '$region', '$punct', '$street', '$bild', '$metro', '$tometrowalk', '$tometrocar', '$square', '$floar', '$floars' , '$totalroom', '$rooms', '$name', '$fhone', '$foto', '$linke', '$maya', '$mayb', '$mayc', '$mayd', '$maye', '$mayf', '$mayg')";
 
 //INSERT INTO `main`(`day`) VALUES ('1985-12-12')
 

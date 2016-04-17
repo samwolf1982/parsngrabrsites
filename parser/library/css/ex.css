@@ -1,0 +1,68 @@
+/* Styles not related to code  */
+
+
+    <!-- CSS goes in the document HEAD or added to your external stylesheet -->
+
+.demoTbl {
+    font-family: verdana,arial,sans-serif;
+    font-size:11px;
+    color:#333333;
+    border-width: 1px;
+    border-color: #666666;
+    border-collapse: collapse;
+    /*  table-layout: fixed;*/
+      /*overflow: hidden;*/
+     /* overflow: visible;
+      width: 100%;
+*/
+
+}
+th {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #dedede;
+   /* height: 50px;*/
+  
+      /*table-layout: fixed;*/
+
+
+}
+ tr td {
+    
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #ffffff;
+      height: 50px;
+     /*  white-space: nowrap;
+        overflow: hidden;
+      /* white-space: nowrap; /* Отменяем перенос текста */
+  /*  overflow: hidden; /* Обрезаем содержимое */
+    /*background: #fc0;*/ /* Цвет фона */
+ /*   padding: 5px; *//* Поля */
+ /* text-overflow: ellipsis; /* Добавляем многоточие */
+   /* table-layout: fixed;*/
+
+}
+tr td {
+
+    white-space: nowrap; /* Запрещаем перенос строк */
+    overflow: hidden; /* Обрезаем все, что не помещается в область */
+    background: #fc0; /* Цвет фона */
+    padding: 5px; /* Поля вокруг текста */
+    text-overflow: ellipsis; /* Добавляем многоточие */
+   }
+table {
+    /*table-layout: fixed; *//* Ячейки фиксированной ширины */
+
+}
+
+ .size {
+    white-space: nowrap; /* Отменяем перенос текста */
+    overflow: hidden; /* Обрезаем содержимое */
+    background: #fc0; /* Цвет фона */
+    padding: 5px; /* Поля */
+   }

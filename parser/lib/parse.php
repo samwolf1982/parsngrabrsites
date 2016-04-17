@@ -1,8 +1,178 @@
 <?php 
+include_once 'clearfield.php';
+include_once 'writetodb.php';
+function parse($document)
+{
+	# code...
+  $document = phpQuery::newDocument($document);
+ $arrElement=array();
 
-   require_once ('phpQuery/phpQuery/phpQuery.php');
-   include_once 'debug/debug.php';
-      include_once 'db.php';
+$a1='.detailed-advert .skip-export >div:first >';
+$a2='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1)';
+// addres link
+$a3 ='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > span:nth-child(2)';
+
+// district
+// search b and remove
+$a4fordelete ='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) b';
+$a4 ='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1)';
+
+
+
+//foto  ???  сейчас показать   взять все сссилки. 
+//tr.detailed-advert:nth-child(1)   менять 1 для подбора
+$a6='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > a:attr("href")';
+
+
+$a7_8_9_10_11_12='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2)';
+
+$a9='tr.detailed-advert:nth-child(1) > td:nth-child(3)';
+//tel
+$a13 ='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > span:nth-child(1)';
+//name   many info
+ $a14 ='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > span:nth-child(2)';
+
+ // own
+  $a15 ='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > span:nth-child(4)';
+//$a ='';
+
+
+$type=null;
+$description=null;
+$price='-999'; 
+$region=$region='ko';// регион москва 
+  $punct=$punct='pu';  // населний пункт
+   $street=null;
+    $bild=null; 
+    $metro=null;
+     $tometrowalk='****'; 
+     $tometrocar='****';
+      $square=null; 
+      $floar=null; 
+      $floars=null; 
+       $totalroom=null; 
+       $rooms=null;
+        $name=null;
+         $fhone=null; 
+  $foto=null;
+   $linke=null;
+$time_publish='00:00:59';  // если ето значение значить ошибка в регулярке
+$date_publish='1900-12-31';       // заполнять во время виборочного парсинга по одному дню можно дать в функцию
+
+    $maya=null; $mayb=null; $mayc=null; $mayd=null; $maye=null; $mayf=null; $mayg=null; 
+
+//1  время публикации + дата публикации
+$str=str_replace('>', '', $a1) ;
+$p_titleInfo = $document->find($str);
+
+//$p_titleInfo->text();
+//Debuger::dumper($p_titleInfo->text());
+ //  дaтa публикации  
+$r= preg_split("/,/", $p_titleInfo->text());
+
+if(is_array($r) && isset($r[0]) ){
+     
+      preg_replace_callback("/Сегодня/", function ($match) use (&$date_publish) {
+$date_publish=date('Y-m-d',time()); 
+
+//$date_publish="1999-12-31";
+}, $r[0]);
+     preg_replace_callback("/Вчера/", function ($match) use (&$date_publish) {
+      	$curdate=date('Y-m-d',time());
+$date_publish=date('Y-m-d', strtotime($curdate .' -1 day')); 
+}, $r[0]);
+
+ //    доделать на все месяци  апреля см на сайте    
+          preg_replace_callback("/([0-9]{1,2})\s*апреля/", function ($match) use (&$date_publish) {
+          	//echo "April";
+           	if(isset($match[1])){
+               // $date_publish=date('Y',time())."-"."04-".($match[1]);
+               //echo "$date_publish"; 
+      if(strlen($match[1])==1){ 
+                            	$date_publish=date('Y',time())."-"."04-0".($match[1]);
+                            }
+                            	else{
+                                                    $date_publish=date('Y',time())."-"."04-".($match[1]);
+                            	}
+
+
+          	}
+}, $r[0]);
+           //    доделать на все месяци  апреля см на сайте    
+          preg_replace_callback("/([0-9]{1,2})\s*марта/", function ($match) use (&$date_publish) {
+          	//echo "April";
+           	if(isset($match[1])){
+                           // echo "len: ".strlen($match[1]);
+                         if(strlen($match[1])==1){ 
+                            	$date_publish=date('Y',time())."-"."03-0".($match[1]);
+                            }
+                            	else{
+                                                    $date_publish=date('Y',time())."-"."03-".($match[1]);
+                            	}
+
+               echo "   $date_publish"; 
+          	}
+}, $r[0]);  
+
+                     //    доделать на все месяци  февраля см на сайте    
+          preg_replace_callback("/([0-9]{1,2})\s*февраля/", function ($match) use (&$date_publish) {
+          	//echo "April";
+           	if(isset($match[1])){
+                           // echo "len: ".strlen($match[1]);
+                         if(strlen($match[1])==1){ 
+                            	$date_publish=date('Y',time())."-"."02-0".($match[1]);
+                            }
+                            	else{
+                                                    $date_publish=date('Y',time())."-"."02-".($match[1]);
+                            	}
+
+              //echo "   $date_publish"; 
+          	}
+}, $r[0]); 
+          // января
+                               //    доделать на все месяци  февраля см на сайте    
+          preg_replace_callback("/([0-9]{1,2})\s*января/", function ($match) use (&$date_publish) {
+          	//echo "April";
+           	if(isset($match[1])){
+                           // echo "len: ".strlen($match[1]);
+                         if(strlen($match[1])==1){ 
+                            	$date_publish=date('Y',time())."-"."01-0".($match[1]);
+                            }
+                            	else{
+                                                    $date_publish=date('Y',time())."-"."01-".($match[1]);
+                            	}
+
+              //echo "   $date_publish"; 
+          	}
+}, $r[0]); 
+
+}
+
+
+
+//echo "before $p_titleInfo->text()<br>";
+if(is_array($r) && isset($r[1]) ){
+ //  время публикации   ok
+  preg_replace_callback("/^[a-zA-ZА-Яа-я,.:;\s]*([0-9]{1,2}[:][0-9]{2})[a-zA-ZА-Яа-я,.:;\s]*$/", function ($match) use (&$time_publish) {
+   $time_publish =$match[1].':00';
+echo "in $time_publish<br>";
+}, $r[1]);
+echo "after $time_publish<br>";
+}
+
+
+writetodb2($date_publish,$time_publish);
+echo 'after db';
+/*writetodb((string)$dater_publish,(string)$time_publish, (string)$type,(string) $description,(string) $price, $region, (string)$punct, (string)$street,(string) $bild,(string) $metro,(string) $tometrowalk, (string)$tometrocar, (string)$square, (string)$floar,(string) $floars, (string)$totalroom, (string)$rooms,(string) $name,(string) $fhone, 
+  (string)$foto,(string) $linke, (string)$maya,(string) $mayb,(string) $mayc, (string)$mayd, (string)$maye, (string)$mayf, (string)$mayg );*/
+
+
+
+
+
+//echo $document;
+}
+
 
 function stage1($value='',$datelook,$region,$punct)
 {
@@ -626,39 +796,6 @@ return $resultJsonFile;
 //print_r($mainArr[1]);
 }
 
-
-// удаляет специфические пробели
-function removewhitespace($value='')
-{
-  # code...
-$a = htmlentities($value);
-
-//$d = trim($a, "\xC2\xA0");
-
-$d=preg_replace("/&#?[a-z0-9]{2,8};/i","",$a);
-//$d=preg_replace('/(?:&(?:zwn?j|r(?:[sd]quo|lm)|hellip|ndash|frac12|shy|ldquo);|%end%)/','',$a);
-
-//$d=filter_var($a, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
-$_array = str_split($d);
-$maynumber=array();
-
-$state=false;
-foreach ($_array as $key => $value) {
-  # code...
-//  echo "$value ";
-  if($state==false){
-   // $maynumber[]='2';  
-$state=true;
-  }
-  $maynumber[]= chr( ord($value));
-  //echo("ord=".ord($value).  '   chr='.chr( ord($value)).'<br>');
-
-}
-
-$d= implode('', $maynumber);
-//echo "$d<br>";
-return $d;
-}
 
 
  ?>

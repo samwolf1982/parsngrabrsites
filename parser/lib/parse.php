@@ -2,9 +2,14 @@
 include_once 'clearfield.php';
 include_once 'writetodb.php';
 include_once 'is_present_in_db.php';
+$GLOBALS['type_base']='rent_living'; //  'rent_business'  'sale_business'  'sale_living'
+
+//define($rent_living, "rent_living");
 //include_once 'lib/library/vendor/jquery-1.7.2.min.js';
 
-
+//названия бд
+// rent_living rentsale_business  sale_living
+//$$typebd="rent_living";
 
 
 
@@ -14,7 +19,21 @@ function parse($document)
   $document = phpQuery::newDocument($document);
     //$document1 = phpQuery::newDocument($document);
      // $document2 = phpQuery::newDocument($document);
- $arrElement=array();
+
+
+$a3del1="tr.detailed-advert:nth-child(1)";
+$a3del="tr.detailed-advert:nth-child()";
+//$ddd=$document->find($str=str_replace('>', '', $a3del) );
+
+
+//------------------------------LOOP  begin
+$main_count=$document->find($str=str_replace('>', '', $a3del) )->count();
+for ($i=0; $i <$main_count ; $i++) { 
+	# code...
+ // to do
+
+//------------------------------LOOP  begin
+  $arrElement=array();
 
 $a1='.detailed-advert .skip-export >div:first >';
 $a2='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1)';
@@ -185,7 +204,12 @@ $street=$bild=$p_titleInfo->text();
  if( is_present_in_db($date_publish,$time_publish,$street)==true){
  	echo "PRESENT ";
  	//return;
+ 	continue;
+ 	// break;
+
+
  }
+ 	echo "after PRESENT<br> ";
 
 
 
@@ -394,17 +418,7 @@ echo 'after db';
   //tr.detailed-advert:nth-child(1)
 
 
-$a3del1="tr.detailed-advert:nth-child(1)";
-$a3del="tr.detailed-advert:nth-child()";
-//$ddd=$document->find($str=str_replace('>', '', $a3del) );
-
-
-$main_count=$document->find($str=str_replace('>', '', $a3del) )->count();
-for ($i=0; $i <$main_count ; $i++) { 
-	# code...
- // to do
-
-
+//------------------------------LOOP  end
 
 	//remove
 $str=null;
@@ -418,6 +432,7 @@ $ddd->remove();
 }
 
 
+//------------------------------LOOP  end
 
 
 
@@ -427,6 +442,8 @@ $ddd->remove();
 
 echo $document;
 }
+
+
 
 
 

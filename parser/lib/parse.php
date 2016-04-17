@@ -40,8 +40,8 @@ $a13 ='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > di
 $type=null;
 $description=null;
 $price='-999'; 
-$region=$region='ko';// регион москва 
-  $punct=$punct='pu';  // населний пункт
+$region=$region='Москва';// регион москва 
+  $punct=$punct='****';  // населний пункт
    $street=null;
     $bild=null; 
     $metro=null;
@@ -53,7 +53,7 @@ $region=$region='ko';// регион москва
        $totalroom=null; 
        $rooms=null;
         $name=null;
-         $fhone=null; 
+         $fhone='****'; 
   $foto=null;
    $linke=null;
 $time_publish='00:00:59';  // если ето значение значить ошибка в регулярке
@@ -155,13 +155,208 @@ if(is_array($r) && isset($r[1]) ){
  //  время публикации   ok
   preg_replace_callback("/^[a-zA-ZА-Яа-я,.:;\s]*([0-9]{1,2}[:][0-9]{2})[a-zA-ZА-Яа-я,.:;\s]*$/", function ($match) use (&$time_publish) {
    $time_publish =$match[1].':00';
-echo "in $time_publish<br>";
+//echo "in $time_publish<br>";
 }, $r[1]);
-echo "after $time_publish<br>";
+//echo "after $time_publish<br>";
 }
+//            -------------------- ok
+
+// тип
+// type 
+
+$str=null;
+$str=str_replace('>', '', $a9) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a9);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+
+$type=$pq->text();
+ //echo "$pq";
+//echo "T: ".$type."<br>";
+
+//2 
+$str=null;
+$str=str_replace('>', '', $a2) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($str);
+
+//Debuger::dumper($p_titleInfo->text());
+//$arrElement['Описание']=$p_titleInfo->text();
 
 
-writetodb2($date_publish,$time_publish);
+$description=$p_titleInfo->text();
+//echo "$description";
+//     -----------------ok
+
+
+//     price
+$a12='tr.detailed-advert:nth-child(1) > td:nth-child(4)';
+$str=null;
+$str=str_replace('>', '', $a12) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a12);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+
+
+$d=removewhitespace($pq->text());
+
+
+  preg_replace_callback("/^[a-zA-ZА-Яа-я,.:;\s]*([0-9]*)[a-zA-ZА-Яа-я,.:;\sруб.]*$/", function ($match) use (&$price) {
+   $price =$match[1];
+
+},$d);
+//------------ ok
+
+// street bild
+$a3='tr.detailed-advert:nth-child(1) > td:nth-child(11)';
+$str=null;
+$str=str_replace('>', '', $a3) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($str);
+
+//Debuger::dumper($p_titleInfo->text());
+$street=$bild=$p_titleInfo->text();
+
+ //    ----- ок  50%
+
+
+// metro  to metro walk car
+$a5='tr.detailed-advert:nth-child(1) > td:nth-child(13)';
+$str=null;
+$str=str_replace('>', '', $a5) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a5);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+
+$metro=$pq->text();;
+
+//$tometrowalk=$pq->text();
+//$tometrocar=$pq->text();
+
+//      ok
+
+// 9 suare   tr.detailed-advert:nth-child(1) > td:nth-child(8) 
+$a9='tr.detailed-advert:nth-child(1) > td:nth-child(8)';
+$str=null;
+$str=str_replace('>', '', $a9) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a9);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+
+$square=$pq->text();
+
+
+
+
+
+// 7 floar етажн  tr.detailed-advert:nth-child(1) > td:nth-child(6)
+$a7='tr.detailed-advert:nth-child(1) > td:nth-child(6)';
+$str=null;
+$str=str_replace('>', '', $a7) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a7);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+
+$floar=$pq->text();
+
+//11 floars етажность   tr.detailed-advert:nth-child(1) > td:nth-child(7)
+$a11='tr.detailed-advert:nth-child(1) > td:nth-child(7)';
+$str=null;
+$str=str_replace('>', '', $a11) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a11);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+
+$floars=$pq->text();
+
+
+//10 room  tr.detailed-advert:nth-child(1) > td:nth-child(5)
+
+$a10='tr.detailed-advert:nth-child(1) > td:nth-child(5)';
+$str=null;
+$str=str_replace('>', '', $a10) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a10);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+
+//$arrElement['room']=$pq->text();
+
+
+$totalroom=$pq->text();;
+
+
+$rooms='******';
+
+
+//14 name tr.detailed-advert:nth-child(1) > td:nth-child(10)
+$a14='tr.detailed-advert:nth-child(1) > td:nth-child(10)';
+$str=null;
+$str=str_replace('>', '', $a14) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a14);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+
+$name=$pq->text();
+
+
+$a13='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > span:nth-child(1)';
+$str=null;
+$str=str_replace('>', '', $a13) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a13);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+
+//echo $pq;
+  $r=array();
+      preg_replace_callback("/\d/", function ($match) use (&$r) {
+
+     	$r[]=$match[0];
+
+}, $pq->text());
+//Debuger::dumper($r);
+$fhone=implode('', $r);
+     //print_r( );
+//  --------------ok
+
+//6 foto
+
+$str=null;
+$str=str_replace('>', '', $a6) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($str);
+
+//Debuger::dumper($p_titleInfo->elements);
+//echo $p_titleInfo;
+$arrfoto=array();
+//  echo "$p_titleInfo";
+foreach ($p_titleInfo as $key => $value) {
+      $pq = pq($value);
+      $arrfoto[]=  $pq->attr('href');
+  # code...
+//  echo "$p_titleInfo";
+//echo $value;
+  //var_dump ($value);
+}
+print_r($arrfoto);
+$foto= implode('  |  ',  $arrfoto);
+
+
+
+
+
+
+
+
+writetodb2($date_publish,$time_publish,$type,$description,$price,$region,$punct,$street,$bild,$metro,$tometrowalk,$tometrocar,$square,$floar,$floars,$totalroom,$rooms,$name,$fhone,$foto);
 echo 'after db';
 /*writetodb((string)$dater_publish,(string)$time_publish, (string)$type,(string) $description,(string) $price, $region, (string)$punct, (string)$street,(string) $bild,(string) $metro,(string) $tometrowalk, (string)$tometrocar, (string)$square, (string)$floar,(string) $floars, (string)$totalroom, (string)$rooms,(string) $name,(string) $fhone, 
   (string)$foto,(string) $linke, (string)$maya,(string) $mayb,(string) $mayc, (string)$mayd, (string)$maye, (string)$mayf, (string)$mayg );*/

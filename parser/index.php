@@ -7,9 +7,9 @@
 
 
    //     get OK
-//loaddocget('http://rent-scaner.ru/estate');
+loaddocget('http://rent-scaner.ru/estate');
 
    // post   OK  
-loaddocpost('http://rent-scaner.ru/estate',generator_form_data(),'rent-scaner.ru');
+//loaddocpost('http://rent-scaner.ru/estate',generator_form_data(),'rent-scaner.ru');
 
   ?>

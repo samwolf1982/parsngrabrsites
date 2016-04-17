@@ -2,6 +2,8 @@
 include_once 'clearfield.php';
 include_once 'writetodb.php';
 include_once 'is_present_in_db.php';
+//include_once 'lib/library/vendor/jquery-1.7.2.min.js';
+
 
 
 
@@ -10,6 +12,8 @@ function parse($document)
 {
 	# code...
   $document = phpQuery::newDocument($document);
+    //$document1 = phpQuery::newDocument($document);
+     // $document2 = phpQuery::newDocument($document);
  $arrElement=array();
 
 $a1='.detailed-advert .skip-export >div:first >';
@@ -180,7 +184,7 @@ $street=$bild=$p_titleInfo->text();
 
  if( is_present_in_db($date_publish,$time_publish,$street)==true){
  	echo "PRESENT ";
- 	return;
+ 	//return;
  }
 
 
@@ -385,10 +389,49 @@ echo 'after db';
   (string)$foto,(string) $linke, (string)$maya,(string) $mayb,(string) $mayc, (string)$mayd, (string)$maye, (string)$mayf, (string)$mayg );*/
 
 
+//cho "FGHJKLGHJEEEEEEEEEEEEEEEEEEEEEE";
+// street bild
+  //tr.detailed-advert:nth-child(1)
+
+
+$a3del1="tr.detailed-advert:nth-child(1)";
+$a3del="tr.detailed-advert:nth-child()";
+//$ddd=$document->find($str=str_replace('>', '', $a3del) );
+
+
+$main_count=$document->find($str=str_replace('>', '', $a3del) )->count();
+for ($i=0; $i <$main_count ; $i++) { 
+	# code...
+ // to do
 
 
 
-//echo $document;
+	//remove
+$str=null;
+$str=str_replace('>', '', $a3del1) ;
+$p_titleInfo=null;
+$ddd=$document->find($str);
+$ddd->remove();
+//$p_titleInfo = $document->find($str);
+
+
+}
+
+
+
+
+//Debuger::dumper($p_titleInfo->text());
+//$street=$p_titleInfo->text();
+//echo "<br>$street<br>";
+// echo "$document";
+
+
+
+
+
+
+
+echo $document;
 }
 
 
@@ -754,254 +797,34 @@ $linke=$arrElement['Источник']='******';
  //echo "$type";
 writetodb((string)$dater_publish,(string)$time_publish, (string)$type,(string) $description,(string) $price, $region, (string)$punct, (string)$street,(string) $bild,(string) $metro,(string) $tometrowalk, (string)$tometrocar, (string)$square, (string)$floar,(string) $floars, (string)$totalroom, (string)$rooms,(string) $name,(string) $fhone, 
   (string)$foto,(string) $linke, (string)$maya,(string) $mayb,(string) $mayc, (string)$mayd, (string)$maye, (string)$mayf, (string)$mayg );
+
+
+
+
+
+//  test
+//$nextchild="tr.detailed-advert:nth-child(1)";
+//$document->find($nextchild)->remove();
+
+
+
+
 //$d=cleardata("lorte");
 
 //writetodb($d ,'123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123');
 
 //writetodb( cleardata('lorem'),'123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123','123');
-/*
 
 
+//$mainArr[]=$arrElement;
 
 
 
+//$resultJsonFile=json_encode($mainArr, JSON_UNESCAPED_UNICODE);
 
 
 
-
-
-
-
-$arrElement['Район']='******';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-$arrElement['Ссылка']='********';
-
-
-
-
-
-
-
-
-
-
-
-$arrElement['ID']='******';  
-$arrElement['Количество повторений']='******';
-
-$arrElement['Базы с повторением']='******';
-
-$arrElement['1/0']='******';
-
-
-
-
-//distrit
-$str=null;
-$str=str_replace('>', '', $a4fordelete) ;
-$document->find($str)->remove();      // remove b
-$str=null;
-//$str=str_replace('>', '', $a4) ; 
-$str=$a4;       
-$p_titleInfo=null;
-$p_titleInfo = $document->find($str);// find element
-
-
-
- 
-  
-
-
-
-
-
-// 4 distric   tr.detailed-advert:nth-child(1) > td:nth-child(12)
-
-$a4='tr.detailed-advert:nth-child(1) > td:nth-child(12)';
-$str=null;
-$str=str_replace('>', '', $a4) ;
-$p_titleInfo=null;
-$p_titleInfo = $document->find($a4);
- // clear all  class="col-md-6"
- $pq = pq($p_titleInfo);
- 
-$arrDistric=array();
-$arrDistric['location']="lorem lorem lorem"; //    later
-$arrDistric['link_adress']=$pq->text();
-//$arrDistric['link_adress']="loremem";
-//echo "pq->text()";
-$arrElement['distric']=$arrDistric;
-
-
-
-
-
-
-//789101012
-$a7_8_9_10_11_12='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) ';
-$str=null;
-$str=str_replace('>', '', $a7_8_9_10_11_12 ) ;
-$p_titleInfo=null;
-$p_titleInfo = $document->find($str);
- // clear all  class="col-md-6"
- $pq = pq($p_titleInfo);
- $pq->find('.col-md-6')->remove();
- $pq->find('b')->remove();
-  $pq->find('span')->remove();
-    $pq->find('hr')->remove();
-      $pq->find('a')->remove();
-
-
-$strarr=null;
-$strarr=array();
-$s=htmlspecialchars_decode( htmlentities ($p_titleInfo));
-
-
- //   echo "$s";
-$strarr=null;
-$strarr=explode('<br>',trim($s));
-
-foreach ($strarr as $key => $value) {
-  # code...
-  //echo "$value";
-}
-
-
-
-
-
-
-
-
-//10 room  tr.detailed-advert:nth-child(1) > td:nth-child(5)
-
-$a10='tr.detailed-advert:nth-child(1) > td:nth-child(5)';
-$str=null;
-$str=str_replace('>', '', $a10) ;
-$p_titleInfo=null;
-$p_titleInfo = $document->find($a10);
- // clear all  class="col-md-6"
- $pq = pq($p_titleInfo);
-
-$arrElement['room']=$pq->text();
-
-
-
-
-
-
-// 9 suare   tr.detailed-advert:nth-child(1) > td:nth-child(8) 
-$a9='tr.detailed-advert:nth-child(1) > td:nth-child(8)';
-$str=null;
-$str=str_replace('>', '', $a9) ;
-$p_titleInfo=null;
-$p_titleInfo = $document->find($a9);
- // clear all  class="col-md-6"
- $pq = pq($p_titleInfo);
-
-$arrElement['square']=$pq->text();
-
-
-
-
-
-
-$a15='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > span:nth-child(4)
-';
-$str=null;
-$str=str_replace('>', '', $a15) ;
-$p_titleInfo=null;
-$p_titleInfo = $document->find($a15);
- // clear all  class="col-md-6"
- $pq = pq($p_titleInfo);
-
-//echo $pq;
-$arrElement['own']=$pq->text();
-
-
-
-
-
-
-
-
-
-
-//13
-$str=null;
-$str=str_replace('>', '', $a13 ) ;
-$p_titleInfo=null;
-$p_titleInfo = $document->find($str);
-
-
-
-//14 name many info
-$str=null;
-$str=str_replace('>', '', $a14 ) ;
-$p_titleInfo=null;
-$p_titleInfo = $document->find($str);
-
-
-
-//15  own
-$str=null;
-$str=str_replace('>', '', $a15 ) ;
-$p_titleInfo=null;
-$p_titleInfo = $document->find($str);
-
-
-*/
-
-$mainArr[]=$arrElement;
-
-
-
-$resultJsonFile=json_encode($mainArr, JSON_UNESCAPED_UNICODE);
-
-
-
-return $resultJsonFile;
+//return $resultJsonFile;
 
 
 

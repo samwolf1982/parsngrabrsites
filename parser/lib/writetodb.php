@@ -1,6 +1,6 @@
 <?php
-function writetodb2($dayer,$timerest,$typeqwer='123', $description='123', $price='123', $region='123', $punct='123', $street='123', $bild='123', $metro='123', $tometrowalk='123', $tometrocar='123', $square='123', $floar='123', $floars='123', $totalroom='123', $rooms='123', $name='123', $fhone='123', 
-	$foto='123', $linke='123', $maya='123', $mayb='123', $mayc='123', $mayd='123', $maye='123', $mayf='123', $mayg='123' )
+function writetodb2($dayer,$timerest,$typeqwer, $description, $price, $region, $punct, $street, $bild, $metro, $tometrowalk, $tometrocar, $square, $floar, $floars, $totalroom, $rooms, $name, $fhone, 
+  $foto, $linke, $maya, $mayb, $mayc, $mayd, $maye, $mayf, $mayg  )
 {
   # code...
   // Данные для mysql сервера
@@ -8,6 +8,12 @@ $dbhost = "127.0.0.1"; // Хост
 $dbuser = "root"; // Имя пользователя
 $dbpassword = ""; // Пароль
 $dbname = "testwp1"; // Имя базы данных
+
+  // Данные для mysql сервера
+//$dbhost = $dbarr['host']; // Хост
+//$dbuser = $dbarr['user'] ;// Имя пользователя
+//$dbpassword =$dbarr['pass']; // Пароль
+//$dbname = $dbarr['dbname']; // Имя базы данных
 
 // Подключаемся к mysql серверу
 $link = mysql_connect($dbhost, $dbuser, $dbpassword);
@@ -79,12 +85,15 @@ mysqli_close($link);
 function writetodb($dayer,$timerest,$typeqwer, $description, $price, $region, $punct, $street, $bild, $metro, $tometrowalk, $tometrocar, $square, $floar, $floars, $totalroom, $rooms, $name, $fhone, 
 	$foto, $linke, $maya, $mayb, $mayc, $mayd, $maye, $mayf, $mayg )
 {
-  # code...
+
+/*
   // Данные для mysql сервера
-$dbhost = "127.0.0.1"; // Хост
-$dbuser = "root"; // Имя пользователя
-$dbpassword = ""; // Пароль
-$dbname = "testwp1"; // Имя базы данных
+$dbhost = $dbarr['host']; // Хост
+$dbuser = $dbarr['user'] ;// Имя пользователя
+$dbpassword =$dbarr['pass']; // Пароль
+$dbname = $dbarr['dbname']; // Имя базы данных
+
+*/
 
 // Подключаемся к mysql серверу
 $link = mysql_connect($dbhost, $dbuser, $dbpassword);

@@ -1,6 +1,11 @@
 <?php 
 include_once 'clearfield.php';
 include_once 'writetodb.php';
+include_once 'is_present_in_db.php';
+
+
+
+
 function parse($document)
 {
 	# code...
@@ -159,6 +164,28 @@ if(is_array($r) && isset($r[1]) ){
 }, $r[1]);
 //echo "after $time_publish<br>";
 }
+
+
+// street bild
+$a3='tr.detailed-advert:nth-child(1) > td:nth-child(11)';
+$str=null;
+$str=str_replace('>', '', $a3) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($str);
+
+//Debuger::dumper($p_titleInfo->text());
+$street=$bild=$p_titleInfo->text();
+
+ //    ----- ок  50%
+
+ if( is_present_in_db($date_publish,$time_publish,$street)==true){
+ 	echo "PRESENT ";
+ 	return;
+ }
+
+
+
+
 //            -------------------- ok
 
 // тип
@@ -209,17 +236,8 @@ $d=removewhitespace($pq->text());
 },$d);
 //------------ ok
 
-// street bild
-$a3='tr.detailed-advert:nth-child(1) > td:nth-child(11)';
-$str=null;
-$str=str_replace('>', '', $a3) ;
-$p_titleInfo=null;
-$p_titleInfo = $document->find($str);
 
-//Debuger::dumper($p_titleInfo->text());
-$street=$bild=$p_titleInfo->text();
 
- //    ----- ок  50%
 
 
 // metro  to metro walk car
@@ -350,13 +368,18 @@ print_r($arrfoto);
 $foto= implode('  |  ',  $arrfoto);
 
 
+  # code...
+$dbarr['host']="127.0.0.1"; // Хост
+$dbarr['user']="root"; // Имя пользователя
+$dbarr['pass']=""; // Пароль
+$dbarr['dbname']="testwp"; // Имя базы данных
 
 
 
 
 
-
-writetodb2($date_publish,$time_publish,$type,$description,$price,$region,$punct,$street,$bild,$metro,$tometrowalk,$tometrocar,$square,$floar,$floars,$totalroom,$rooms,$name,$fhone,$foto);
+writetodb2((string)$date_publish,(string)$time_publish, (string)$type,(string) $description,(string) $price, $region, (string)$punct, (string)$street,(string) $bild,(string) $metro,(string) $tometrowalk, (string)$tometrocar, (string)$square, (string)$floar,(string) $floars, (string)$totalroom, (string)$rooms,(string) $name,(string) $fhone, 
+  (string)$foto,(string) $linke, (string)$maya,(string) $mayb,(string) $mayc, (string)$mayd, (string)$maye, (string)$mayf, (string)$mayg );
 echo 'after db';
 /*writetodb((string)$dater_publish,(string)$time_publish, (string)$type,(string) $description,(string) $price, $region, (string)$punct, (string)$street,(string) $bild,(string) $metro,(string) $tometrowalk, (string)$tometrocar, (string)$square, (string)$floar,(string) $floars, (string)$totalroom, (string)$rooms,(string) $name,(string) $fhone, 
   (string)$foto,(string) $linke, (string)$maya,(string) $mayb,(string) $mayc, (string)$mayd, (string)$maye, (string)$mayf, (string)$mayg );*/

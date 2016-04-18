@@ -2,11 +2,11 @@
 include_once 'parse.php';
 
 // обязательно ввести все
-function loaddocpost($url, $data,$host, $calback='parse', $type='POST')
+function loadfileGET($url, $data,$host, $calback='parse', $type='GET')
 {
 	phpQuery::ajaxAllowHost($host); 
 	# code...
-phpQuery::post($url, $data, $calback, $type); 
+phpQuery::get($url, $data, $calback, $type); 
 
 
 

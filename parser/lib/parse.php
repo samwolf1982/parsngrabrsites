@@ -3,6 +3,8 @@ include_once 'clearfield.php';
 include_once 'writetodb.php';
 include_once 'is_present_in_db.php';
 $GLOBALS['type_base']='rent_living'; //  'rent_business'  'sale_business'  'sale_living'
+$GLOBALS['total_room']=0; 
+$GLOBALS['filter']=false;
 
 //define($rent_living, "rent_living");
 //include_once 'lib/library/vendor/jquery-1.7.2.min.js';
@@ -25,9 +27,9 @@ $a3del1="tr.detailed-advert:nth-child(1)";
 $a3del="tr.detailed-advert:nth-child()";
 //$ddd=$document->find($str=str_replace('>', '', $a3del) );
 
-
+$filter=$GLOBALS['filter'];
 //------------------------------LOOP  begin
-$main_count=$document->find($str=str_replace('>', '', $a3del) )->count();
+$GLOBALS['total_room']=$main_count=$document->find($str=str_replace('>', '', $a3del) )->count();
 for ($i=0; $i <$main_count ; $i++) { 
 	# code...
  // to do
@@ -138,7 +140,7 @@ $date_publish=date('Y-m-d', strtotime($curdate .' -1 day'));
                                                     $date_publish=date('Y',time())."-"."03-".($match[1]);
                             	}
 
-               echo "   $date_publish"; 
+            //   echo "   $date_publish"; 
           	}
 }, $r[0]);  
 
@@ -201,15 +203,60 @@ $street=$bild=$p_titleInfo->text();
 
  //    ----- ок  50%
 
- if( is_present_in_db($date_publish,$time_publish,$street)==true){
- 	echo "PRESENT ";
+
+//14 name tr.detailed-advert:nth-child(1) > td:nth-child(10)
+$a14='tr.detailed-advert:nth-child(1) > td:nth-child(10)';
+$str=null;
+$str=str_replace('>', '', $a14) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a14);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+
+$name=$pq->text();
+
+$a13='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > span:nth-child(1)';
+$str=null;
+$str=str_replace('>', '', $a13) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a13);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+
+//echo $pq;
+  $r=array();
+      preg_replace_callback("/\d/", function ($match) use (&$r) {
+
+      $r[]=$match[0];
+
+}, $pq->text());
+//Debuger::dumper($r);
+$fhone=implode('', $r);
+     //print_r( );
+//  --------------ok
+
+
+
+
+
+ if( is_present_in_db($date_publish,$time_publish,$street,$name,$fhone,$filter)==true){
+ //	echo "PRESENT ";
+  echo "<br> Совпадение TEL: ".$fhone."  NAME: ".$name  ;
+  //remove
+$str=null;
+$str=str_replace('>', '', $a3del1) ;
+$p_titleInfo=null;
+$ddd=$document->find($str);
+$ddd->remove();
+ 
+
  	//return;
  	continue;
  	// break;
 
 
  }
- 	echo "after PRESENT<br> ";
+ //	echo "after PRESENT<br> ";
 
 
 
@@ -341,37 +388,7 @@ $totalroom=$pq->text();;
 $rooms='******';
 
 
-//14 name tr.detailed-advert:nth-child(1) > td:nth-child(10)
-$a14='tr.detailed-advert:nth-child(1) > td:nth-child(10)';
-$str=null;
-$str=str_replace('>', '', $a14) ;
-$p_titleInfo=null;
-$p_titleInfo = $document->find($a14);
- // clear all  class="col-md-6"
- $pq = pq($p_titleInfo);
 
-$name=$pq->text();
-
-
-$a13='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > span:nth-child(1)';
-$str=null;
-$str=str_replace('>', '', $a13) ;
-$p_titleInfo=null;
-$p_titleInfo = $document->find($a13);
- // clear all  class="col-md-6"
- $pq = pq($p_titleInfo);
-
-//echo $pq;
-  $r=array();
-      preg_replace_callback("/\d/", function ($match) use (&$r) {
-
-     	$r[]=$match[0];
-
-}, $pq->text());
-//Debuger::dumper($r);
-$fhone=implode('', $r);
-     //print_r( );
-//  --------------ok
 
 //6 foto
 
@@ -392,7 +409,7 @@ foreach ($p_titleInfo as $key => $value) {
 //echo $value;
   //var_dump ($value);
 }
-print_r($arrfoto);
+//print_r($arrfoto);
 $foto= implode('  |  ',  $arrfoto);
 
 
@@ -408,7 +425,7 @@ $dbarr['dbname']="testwp"; // Имя базы данных
 
 writetodb2((string)$date_publish,(string)$time_publish, (string)$type,(string) $description,(string) $price, $region, (string)$punct, (string)$street,(string) $bild,(string) $metro,(string) $tometrowalk, (string)$tometrocar, (string)$square, (string)$floar,(string) $floars, (string)$totalroom, (string)$rooms,(string) $name,(string) $fhone, 
   (string)$foto,(string) $linke, (string)$maya,(string) $mayb,(string) $mayc, (string)$mayd, (string)$maye, (string)$mayf, (string)$mayg );
-echo 'after db';
+//echo 'after db';
 /*writetodb((string)$dater_publish,(string)$time_publish, (string)$type,(string) $description,(string) $price, $region, (string)$punct, (string)$street,(string) $bild,(string) $metro,(string) $tometrowalk, (string)$tometrocar, (string)$square, (string)$floar,(string) $floars, (string)$totalroom, (string)$rooms,(string) $name,(string) $fhone, 
   (string)$foto,(string) $linke, (string)$maya,(string) $mayb,(string) $mayc, (string)$mayd, (string)$maye, (string)$mayf, (string)$mayg );*/
 
@@ -440,7 +457,8 @@ $ddd->remove();
 
 
 
-echo $document;
+//echo $document;
+echo "I'm finish";
 }
 
 

@@ -1,14 +1,24 @@
 <?php
+
+
 function writetodb2($dayer,$timerest,$typeqwer, $description, $price, $region, $punct, $street, $bild, $metro, $tometrowalk, $tometrocar, $square, $floar, $floars, $totalroom, $rooms, $name, $fhone, 
   $foto, $linke, $maya, $mayb, $mayc, $mayd, $maye, $mayf, $mayg  )
 {
   # code...
   // Данные для mysql сервера
-$dbhost = "127.0.0.1"; // Хост
+/*$dbhost = "127.0.0.1"; // Хост
 $dbuser = "root"; // Имя пользователя
 $dbpassword = ""; // Пароль
 $dbname = "testwp1"; // Имя базы данных
-
+*/
+$dbhost = $GLOBALS['u_host']; // Хост
+$dbuser = $GLOBALS['u_user']; // Имя пользователя
+$dbpassword =$GLOBALS['u_pass']; // Пароль
+$dbname = $GLOBALS['u_dbname']; // Имя базы данных
+//$dbhost = "127.0.0.1"; // Хост
+$dbuser = "root"; // Имя пользователя
+$dbpassword = ""; // Пароль
+$dbname = "testwp1"; // Имя базы данных
   // Данные для mysql сервера
 //$dbhost = $dbarr['host']; // Хост
 //$dbuser = $dbarr['user'] ;// Имя пользователя
@@ -66,6 +76,8 @@ $sql=" insert into `".$GLOBALS['type_base']."`(`day`, `time`, `type`, `descripti
 // Закрываем соединение
 mysqli_close($link);
 
+//echo "<br>TEL: ".$fhone."  NAME: ".$name  ;
+$GLOBALS['write_room']=$GLOBALS['write_room']+1;    //++ ???
 // Подключаемся к mysql серверу
 //$link = mysql_connect($dbhost, $dbuser, $dbpassword);
 
@@ -81,6 +93,7 @@ mysqli_close($link);
 
 // Закрываем соединение
 //mysql_close($link);
+//echo "Add";
 }
 
 

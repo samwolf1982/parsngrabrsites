@@ -1,10 +1,16 @@
 <?php 
+header('Content-Type: text/html; charset=utf-8');
+/* Установка внутренней кодировки в UTF-8 */
+mb_internal_encoding("UTF-8");
+
+/* Вывод на экран текущей внутренней кодировки */
+//echo mb_internal_encoding();
 include_once 'clearfield.php';
 include_once 'writetodb.php';
 include_once 'is_present_in_db.php';
-$GLOBALS['type_base']='rent_living'; //  'rent_business'  'sale_business'  'sale_living'
-$GLOBALS['total_room']=0; 
-$GLOBALS['filter']=false;
+//$GLOBALS['type_base']='rent_living'; //  'rent_business'  'sale_business'  'sale_living'
+$GLOBALS['date_publish_state']=false;
+$GLOBALS['telcolect']=array();
 
 //define($rent_living, "rent_living");
 //include_once 'lib/library/vendor/jquery-1.7.2.min.js';
@@ -12,6 +18,149 @@ $GLOBALS['filter']=false;
 //названия бд
 // rent_living rentsale_business  sale_living
 //$$typebd="rent_living";
+
+// today
+function my_replace_function1($match){
+    global $data;
+    $value = date('Y-m-d',time()); 
+    $GLOBALS['date_publish_state']=true;
+    return $value;
+}
+
+//yesterday
+function my_replace_function2($match){
+global $data;
+        $curdate=date('Y-m-d',time());
+    $GLOBALS['date_publish_state']=true;
+return date('Y-m-d', strtotime($curdate .' -1 day'));
+
+}
+
+
+
+
+// april
+function my_replace_function3($match){
+
+ global $data;
+            //echo "April";
+            if(isset($match[1])){
+               // $date_publish=date('Y',time())."-"."04-".($match[1]);
+               //echo "$date_publish"; 
+      if(strlen($match[1])==1){ 
+         $GLOBALS['date_publish_state']=true;
+                              return date('Y',time())."-"."04-0".($match[1]);
+                            }
+                              else{
+                                 $GLOBALS['date_publish_state']=true;
+                                                    return date('Y',time())."-"."04-".($match[1]);
+                              }
+
+
+            
+}
+}
+// march
+function my_replace_function4($match){
+
+ global $data;
+
+
+            if(isset($match[1])){
+                           // echo "len: ".strlen($match[1]);
+                         if(strlen($match[1])==1){ 
+                                $GLOBALS['date_publish_state']=true;
+                             return date('Y',time())."-"."03-0".($match[1]);
+                            }
+                              else{
+                                      $GLOBALS['date_publish_state']=true;
+                                                   return date('Y',time())."-"."03-".($match[1]);
+                              }
+
+            //   echo "   $date_publish"; 
+            }
+
+
+            
+}
+//   february
+function my_replace_function5($match){
+
+ global $data;
+
+            //echo "April";
+            if(isset($match[1])){
+                           // echo "len: ".strlen($match[1]);
+                         if(strlen($match[1])==1){ 
+                               $GLOBALS['date_publish_state']=true;
+                             return date('Y',time())."-"."02-0".($match[1]);
+                            }
+                              else{
+                                     $GLOBALS['date_publish_state']=true;
+                                                   return date('Y',time())."-"."02-".($match[1]);
+                              }
+
+            //   echo "   $date_publish"; 
+            }
+
+    
+
+            
+}
+// january
+function my_replace_function6($match){
+
+ global $data;
+
+            //echo "April";
+            if(isset($match[1])){
+                           // echo "len: ".strlen($match[1]);
+                         if(strlen($match[1])==1){ 
+                                $GLOBALS['date_publish_state']=true;
+                             return date('Y',time())."-"."01-0".($match[1]);
+                            }
+                              else{
+                                      $GLOBALS['date_publish_state']=true;
+                                                   return date('Y',time())."-"."01-".($match[1]);
+                              }
+
+            //   echo "   $date_publish"; 
+            }
+
+    
+
+            
+}
+function pregreplace8($match)
+{
+  # code...
+ global $data;
+
+ echo '<br>REG:'.  $match[1].'<br>';
+return   $time_publish =$match[1].':00';
+//echo "in $time_publish<br>";
+
+}
+
+// fhone
+ function pregreplase9($match) {
+ global $data;
+//Debuger::dumper($match[0]);
+// var_dump($match[0]);
+ $GLOBALS['telcolect'][]=$match[0];
+     return $match[0];
+
+}
+
+ function pregreplase10 ($match)  {
+   
+    global $data;
+     return $match[1];
+
+}
+
+
+
 
 
 
@@ -33,7 +182,8 @@ $GLOBALS['total_room']=$main_count=$document->find($str=str_replace('>', '', $a3
 for ($i=0; $i <$main_count ; $i++) { 
 	# code...
  // to do
-
+ //  sleep(1);
+  if($i==$GLOBALS['maxcount']) break;
 //------------------------------LOOP  begin
   $arrElement=array();
 
@@ -102,92 +252,54 @@ $r= preg_split("/,/", $p_titleInfo->text());
 
 if(is_array($r) && isset($r[0]) ){
      
-      preg_replace_callback("/Сегодня/", function ($match) use (&$date_publish) {
-$date_publish=date('Y-m-d',time()); 
-
-//$date_publish="1999-12-31";
-}, $r[0]);
-     preg_replace_callback("/Вчера/", function ($match) use (&$date_publish) {
-      	$curdate=date('Y-m-d',time());
-$date_publish=date('Y-m-d', strtotime($curdate .' -1 day')); 
-}, $r[0]);
-
- //    доделать на все месяци  апреля см на сайте    
-          preg_replace_callback("/([0-9]{1,2})\s*апреля/", function ($match) use (&$date_publish) {
-          	//echo "April";
-           	if(isset($match[1])){
-               // $date_publish=date('Y',time())."-"."04-".($match[1]);
-               //echo "$date_publish"; 
-      if(strlen($match[1])==1){ 
-                            	$date_publish=date('Y',time())."-"."04-0".($match[1]);
-                            }
-                            	else{
-                                                    $date_publish=date('Y',time())."-"."04-".($match[1]);
-                            	}
+ 
+$GLOBALS['date_publish_state']=false;
 
 
-          	}
-}, $r[0]);
+     $date_publish= preg_replace_callback("/Сегодня/", 'my_replace_function1', $r[0]);
+
+          
+ if($GLOBALS['date_publish_state']==false){
+    $date_publish= preg_replace_callback("/Вчера/",'my_replace_function2' , $r[0]);
+ }
+
+//echo "<br>---$date_publish";
+ //    доделать на все месяци  апреля см на сайте   
+  if($GLOBALS['date_publish_state']==false){
+ 
+       $date_publish=   preg_replace_callback("/([0-9]{1,2})\s*апреля/", 'my_replace_function3', $r[0]);
+     }
+
+   if($GLOBALS['date_publish_state']==false){
+   
            //    доделать на все месяци  апреля см на сайте    
-          preg_replace_callback("/([0-9]{1,2})\s*марта/", function ($match) use (&$date_publish) {
-          	//echo "April";
-           	if(isset($match[1])){
-                           // echo "len: ".strlen($match[1]);
-                         if(strlen($match[1])==1){ 
-                            	$date_publish=date('Y',time())."-"."03-0".($match[1]);
-                            }
-                            	else{
-                                                    $date_publish=date('Y',time())."-"."03-".($match[1]);
-                            	}
+     $date_publish=     preg_replace_callback("/([0-9]{1,2})\s*марта/",'my_replace_function4' , $r[0]);  
+   }
 
-            //   echo "   $date_publish"; 
-          	}
-}, $r[0]);  
+           if($GLOBALS['date_publish_state']==false){
 
                      //    доделать на все месяци  февраля см на сайте    
-          preg_replace_callback("/([0-9]{1,2})\s*февраля/", function ($match) use (&$date_publish) {
-          	//echo "April";
-           	if(isset($match[1])){
-                           // echo "len: ".strlen($match[1]);
-                         if(strlen($match[1])==1){ 
-                            	$date_publish=date('Y',time())."-"."02-0".($match[1]);
-                            }
-                            	else{
-                                                    $date_publish=date('Y',time())."-"."02-".($match[1]);
-                            	}
+        $date_publish=   preg_replace_callback("/([0-9]{1,2})\s*февраля/",'my_replace_function5' , $r[0]); }
 
-              //echo "   $date_publish"; 
-          	}
-}, $r[0]); 
+         if($GLOBALS['date_publish_state']==false){
+
           // января
-                               //    доделать на все месяци  февраля см на сайте    
-          preg_replace_callback("/([0-9]{1,2})\s*января/", function ($match) use (&$date_publish) {
-          	//echo "April";
-           	if(isset($match[1])){
-                           // echo "len: ".strlen($match[1]);
-                         if(strlen($match[1])==1){ 
-                            	$date_publish=date('Y',time())."-"."01-0".($match[1]);
-                            }
-                            	else{
-                                                    $date_publish=date('Y',time())."-"."01-".($match[1]);
-                            	}
-
-              //echo "   $date_publish"; 
-          	}
-}, $r[0]); 
+                               //    доделать на все месяци  zydfhm см на сайте    
+        $date_publish=   preg_replace_callback("/([0-9]{1,2})\s*января/",'my_replace_function6', $r[0]); 
+      }
 
 }
 
 
 
-//echo "before $p_titleInfo->text()<br>";
+
 if(is_array($r) && isset($r[1]) ){
  //  время публикации   ok
-  preg_replace_callback("/^[a-zA-ZА-Яа-я,.:;\s]*([0-9]{1,2}[:][0-9]{2})[a-zA-ZА-Яа-я,.:;\s]*$/", function ($match) use (&$time_publish) {
-   $time_publish =$match[1].':00';
-//echo "in $time_publish<br>";
-}, $r[1]);
-//echo "after $time_publish<br>";
+//echo "before $p_titleInfo->text()<br>";
+$r= preg_split("/ /", $r[1]);
+
+$time_publish = preg_replace_callback("/^[a-zA-ZА-Яа-я,.:;\s]*([0-9]{1,2}[:][0-9]{2})[a-zA-ZА-Яа-я,.-:;\(\)\s]*$/",'pregreplace8' , $r[1]);
+
 }
 
 
@@ -225,13 +337,14 @@ $p_titleInfo = $document->find($a13);
 
 //echo $pq;
   $r=array();
-      preg_replace_callback("/\d/", function ($match) use (&$r) {
-
-      $r[]=$match[0];
-
-}, $pq->text());
-//Debuger::dumper($r);
-$fhone=implode('', $r);
+    $r[]=  preg_replace_callback("/\d/", 'pregreplase9' , $pq->text());
+//Debuger::dumper( $GLOBALS['telcolect']);
+//print_r( $GLOBALS['telcolect']);
+$fhone=implode('',  $GLOBALS['telcolect']);
+//    print_r($r);
+//$fhone=$r[0];
+ $GLOBALS['telcolect']=null;
+  $GLOBALS['telcolect']=array();
      //print_r( );
 //  --------------ok
 
@@ -241,7 +354,7 @@ $fhone=implode('', $r);
 
  if( is_present_in_db($date_publish,$time_publish,$street,$name,$fhone,$filter)==true){
  //	echo "PRESENT ";
-  echo "<br> Совпадение TEL: ".$fhone."  NAME: ".$name  ;
+    //echo "<br> Совпадение TEL: ".$fhone."  NAME: ".$name  ;
   //remove
 $str=null;
 $str=str_replace('>', '', $a3del1) ;
@@ -305,10 +418,7 @@ $p_titleInfo = $document->find($a12);
 $d=removewhitespace($pq->text());
 
 
-  preg_replace_callback("/^[a-zA-ZА-Яа-я,.:;\s]*([0-9]*)[a-zA-ZА-Яа-я,.:;\sруб.]*$/", function ($match) use (&$price) {
-   $price =$match[1];
-
-},$d);
+ $price= preg_replace_callback("/^[a-zA-ZА-Яа-я,.:;\s]*([0-9]*)[a-zA-ZА-Яа-я,.:;\sруб.]*$/", 'pregreplase10' ,$d);
 //------------ ok
 
 
@@ -414,14 +524,14 @@ $foto= implode('  |  ',  $arrfoto);
 
 
   # code...
-$dbarr['host']="127.0.0.1"; // Хост
+/*$dbarr['host']="127.0.0.1"; // Хост
 $dbarr['user']="root"; // Имя пользователя
 $dbarr['pass']=""; // Пароль
 $dbarr['dbname']="testwp"; // Имя базы данных
 
 
 
-
+*/
 
 writetodb2((string)$date_publish,(string)$time_publish, (string)$type,(string) $description,(string) $price, $region, (string)$punct, (string)$street,(string) $bild,(string) $metro,(string) $tometrowalk, (string)$tometrocar, (string)$square, (string)$floar,(string) $floars, (string)$totalroom, (string)$rooms,(string) $name,(string) $fhone, 
   (string)$foto,(string) $linke, (string)$maya,(string) $mayb,(string) $mayc, (string)$mayd, (string)$maye, (string)$mayf, (string)$mayg );
@@ -460,11 +570,3 @@ $ddd->remove();
 //echo $document;
 echo "I'm finish";
 }
-
-
-
-
-
-
-
- ?>

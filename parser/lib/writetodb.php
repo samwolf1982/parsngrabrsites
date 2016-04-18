@@ -16,9 +16,14 @@ $dbuser = $GLOBALS['u_user']; // Имя пользователя
 $dbpassword =$GLOBALS['u_pass']; // Пароль
 $dbname = $GLOBALS['u_dbname']; // Имя базы данных
 //$dbhost = "127.0.0.1"; // Хост
+
+/*
 $dbuser = "root"; // Имя пользователя
 $dbpassword = ""; // Пароль
 $dbname = "testwp1"; // Имя базы данных
+
+*/
+
   // Данные для mysql сервера
 //$dbhost = $dbarr['host']; // Хост
 //$dbuser = $dbarr['user'] ;// Имя пользователя
@@ -26,10 +31,11 @@ $dbname = "testwp1"; // Имя базы данных
 //$dbname = $dbarr['dbname']; // Имя базы данных
 
 // Подключаемся к mysql серверу
-$link = mysql_connect($dbhost, $dbuser, $dbpassword);
+//$link = mysql_connect($dbhost, $dbuser, $dbpassword);
 
 /* Открыть соединение */
-$link = mysqli_connect("127.0.0.1", "root", "",$dbname );
+//$link = mysqli_connect("127.0.0.1", "root", "",$dbname );
+$link = mysqli_connect($dbhost, $dbuser, $dbpassword,$dbname );
 
 /* проверка соединения */
 if (mysqli_connect_errno()) {

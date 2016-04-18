@@ -7,7 +7,8 @@ function is_present_in_db($day,$time,$street,$name,$tel,$filter)
 	# code...
 //SELECT `day`, `time`, `street`, `bild`, `name`, `fhone` FROM `main` WHERE 1
 	//SELECT `description` FROM `main` WHERE `day`='2016-04-17' AND `time`='07:12:00' AND `street`='Новочерёмушкинская улица, 21к1'
-$sql="select `description` from `".$GLOBALS['type_base']."` where `day`='".$day."' and `time`='".$time."' and `street`='".$street."' and `name`='".$name."' and `fhone`='".$tel."'";
+$sql="select count(*) from `".$GLOBALS['type_base']."` where `day`='".$day."' and `time`='".$time."' and `street`='".$street."' and `name`='".$name."' and `fhone`='".$tel."'";
+
 //echo "<br>$sql<br>";
 /*$dbarr['host']="127.0.0.1"; // Хост
 $dbarr['user']="root"; // Имя пользователя
@@ -27,8 +28,13 @@ $dbname = $GLOBALS['u_dbname']; // Имя базы данных
 //$link = mysql_connect($dbhost, $dbuser, $dbpassword);
 
 /* Открыть соединение */
-$link = mysqli_connect("127.0.0.1", "root", "", "testwp1");
+//$link = mysqli_connect("127.0.0.1", "root", "", "testwp1");
+//echo "$dbhost<br>";
+//echo "$dbuser<br>";
+//echo "$dbpassword<br>";
+//echo "$dbname<br>";
 
+$link = mysqli_connect($dbhost , $dbuser, $dbpassword , $dbname);
 /* проверка соединения */
 if (mysqli_connect_errno()) {
     printf("Не удалось подключиться: %s\n", mysqli_connect_error());
@@ -38,7 +44,10 @@ if (mysqli_connect_errno()) {
 mysqli_set_charset($link, "utf8");
   $stateresult=false;
 if( $res = mysqli_query($link,$sql)){
-if($res->num_rows>0)$stateresult= true;
+$row = $res->fetch_row();
+
+
+if($row[0]>0)$stateresult= true;
 else  $stateresult= false;
 }
 else {

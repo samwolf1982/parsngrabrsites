@@ -1,6 +1,6 @@
 <?php
 //include_once 'beginfill.php';
-
+include_once 'setting.php';
 function is_present_in_db($day,$time,$street,$name,$tel,$filter)
 {
 	if($filter==false) return false;

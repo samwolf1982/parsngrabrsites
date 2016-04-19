@@ -1,5 +1,5 @@
 <?php
-
+include_once 'setting.php';
 
 function writetodb2($dayer,$timerest,$typeqwer, $description, $price, $region, $punct, $street, $bild, $metro, $tometrowalk, $tometrocar, $square, $floar, $floars, $totalroom, $rooms, $name, $fhone, 
   $foto, $linke, $maya, $mayb, $mayc, $mayd, $maye, $mayf, $mayg  )

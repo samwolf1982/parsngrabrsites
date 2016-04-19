@@ -8,6 +8,7 @@ mb_internal_encoding("UTF-8");
 include_once 'clearfield.php';
 include_once 'writetodb.php';
 include_once 'is_present_in_db.php';
+include_once 'setting.php';
 //$GLOBALS['type_base']='rent_living'; //  'rent_business'  'sale_business'  'sale_living'
 $GLOBALS['date_publish_state']=false;
 $GLOBALS['telcolect']=array();

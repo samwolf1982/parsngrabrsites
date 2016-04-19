@@ -6,6 +6,8 @@ $GLOBALS['type_base']='rent_living'; //  'rent_business'  'sale_business'  'sale
 $GLOBALS['total_room']=0; 
 $GLOBALS['filter']=false;
 
+include_once 'setting.php';
+
 //define($rent_living, "rent_living");
 //include_once 'lib/library/vendor/jquery-1.7.2.min.js';
 

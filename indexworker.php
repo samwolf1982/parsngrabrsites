@@ -13,7 +13,8 @@ mb_internal_encoding("UTF-8");
 
 /* Вывод на экран текущей внутренней кодировки */
 //echo mb_internal_encoding();
-echo "string";
+//echo "string";
+include_once 'lib/setting.php';
   require_once ('phpQuery/phpQuery/phpQuery.php');
   require_once  'debug/debug.php';
   require_once  'lib/loaddocget.php';
@@ -25,24 +26,12 @@ echo "string";
 //     get OK
 //loaddocget('http://rent-scaner.ru/estate');
 
-echo "OK";
+//echo "OK";
 
  //set_time_limit ( 180 );
  //echo "gogo";
-$GLOBALS['u_host']="127.0.0.1"; // Хост
-$GLOBALS['u_user']="root"; // Имя пользователя
-$GLOBALS['u_pass']=""; // Пароль
-$GLOBALS['u_dbname']="testwp1"; // Имя базы данных
-$GLOBALS['total_room']=0; 
-$GLOBALS['filter']=false;
-$GLOBALS['maxcount']=5;
 
-/*
-$GLOBALS['u_host']="mysql12.000webhost.com"; // Хост
-$GLOBALS['u_user']="a1100551_root"; // Имя пользователя
-$GLOBALS['u_pass']="Dublianu1982"; // Пароль
-$GLOBALS['u_dbname']="a1100551_testwp1"; // Имя базы данных
-*/
+
 
 $GLOBALS['write_room']=0;  // count write
 $GLOBALS['type_base']='rent_living'; //  'rent_business'  'sale_business'  'sale_living'
@@ -50,8 +39,14 @@ $GLOBALS['filter']=true;   // false all write  truu filter
 
 
 
-$datefrom="13/02/2016";  //17/04/2016
-$dateto="14/02/2016";   //18/04/2016
+$datefrom="17/04/2016";  //17/04/2016
+$dateto="18/04/2016";   //18/04/2016
+ $curdate=date('d-m-Y',time());
+$datefrom=date('d/m/Y', strtotime($curdate .' -1 day'));
+$dateto=date('d/m/Y',time()); 
+
+echo "$datefrom <br>";
+echo "$dateto <br>";
 
 $GLOBALS['type_base']='rent_living'; 
 loaddocpost('http://rent-scaner.ru/estate?per-page=50',generator_form_data("507","1",$datefrom,$dateto),'rent-scaner.ru');

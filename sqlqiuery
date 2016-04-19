@@ -1,0 +1,9 @@
+SELECT * FROM ( SELECT * FROM `rent_living` ORDER BY `day` DESC ) as `tab`  ORDER by `time` DESC
+
+$sql = "SELECT * FROM ( SELECT * FROM `rent_living` ORDER BY `day` DESC ) as `tab` ORDER by `time` DESC";
+------              сортировка
+
+SELECT `day`,`time`, `type`,`price`,`street`,`square`,`totalroom`,`metro`,`fhone`,`name`,`description` FROM ( SELECT * FROM `rent_living` ORDER BY `time` DESC ) as `tab`  ORDER by `day` DESC
+
+$sql = "SELECT `day`,`time`, `type`,`price`,`street`,`square`,`totalroom`,`metro`,`fhone`,`name`,`description` FROM ( SELECT * FROM `rent_living` ORDER BY `time` DESC ) as `tab` ORDER by `day` DESC";
+-------------

@@ -1,5 +1,5 @@
 <?php
-include_once 'setting.php';
+include_once 'lib/setting.php';
 
 
 $dbhost = $GLOBALS['u_host']; // Хост
@@ -10,6 +10,7 @@ $dbname = $GLOBALS['u_dbname']; // Имя базы данных
 
 $sql="select `day` as `День` , `time` as `Время` from `rent_living` WHERE 1";
 $sql="select `day` as `День` , `time` as `Время`,`price` as `Цена`,`street` as `Улица`, `totalroom` as `Комнат` ,`floar` as `Этаж`,`fhone` as `Телефон`, `name` as `Имя` from `rent_living` WHERE 1";
+$sql = "select `day`,`time`, `type`,`price`,`street`,`square`,`totalroom`,`metro`,`fhone`,`name`,`description` from `rent_living` ORDER BY `id` DESC";
 $v='[';
 
 $link = mysqli_connect($dbhost , $dbuser, $dbpassword , $dbname);
@@ -28,7 +29,7 @@ while ($row = $result->fetch_row()) {
 
 //echo $row[5]."<br>";
 
-  $temp='{"Дата": "'.$row[0].'","Время": "'.$row[1].'","Цена": "'.$row[2].'","Улица": "'.$row[3].'","Комнат": "'.$row[4].'","Этаж": "'.(string)$row[5].'","Телефон": "'.$row[6].'","Имя": "'.$row[7].'"},';
+  $temp='{"Дата": "'.$row[0].'","Время": "'.$row[1].'","Тип": "'.$row[2].'","Цена": "'.$row[3].'","Адрес": "'.$row[4].'","Площадь": "'.(string)$row[5].'","Комнат": "'.$row[6].'","Метро": "'.$row[7].'","Телефон": "'.$row[8].'","Имя": "'.$row[9].'"},';
 $v.=$temp;
 
   

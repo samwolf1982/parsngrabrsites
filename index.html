@@ -27,15 +27,16 @@
         <div class="header-container">
             <header class="wrapper clearfix">
                 <h1 class="title">h1.title</h1>
-                <nav>
-                    <ul>
-                        <li onclick="rentLive()"><a href="#">Аренда жилой</a></li>
-                        <li><a href="tocv.php"  id="tocv">To CV</a></li>
-                        <li><a href="#">Продажа жилая</a></li>
+               
+                  
+                        <button onclick="rentlive()"><a href="#">Аренда жилой</a></button>
+                           <button onclick="rentbissnes()"><a href="#">Аренда комерческая</a></button>
+                        <button><a href="tocv.php"  id="tocv">To CV</a></button>
+                     
                   
                    
-                    </ul>
-                </nav>
+                   
+                
             </header>
         </div>
 
@@ -44,14 +45,13 @@
 
 
                     <header>
-                        <h1>article header h1</h1>
                     </header>
                     <section>
                   <p> Количество дней</p>
                     <input min="1" max="30" value="1"  type="range" id="trackbar" onchange="onChangeTrackBar()" onmouseup="ontrackup()" />
         Дни: <span id="trackBarValue">1</span>
 
-        <button onclick="testClick()">Обновить</button>
+        <button onclick="changetable()">Обновить</button>
                         <h2>Аренда жилой</h2>
 
 <table id="my-final-table">

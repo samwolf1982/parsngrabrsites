@@ -7,20 +7,9 @@ console.log(Object.getOwnPropertyNames(dino));
 console.dir(dino);
 */
 
-function rentLive(argument) {
+var globalstate=1;
 
-// SELECT `day` as `День` , `time` as `Время` FROM `rent_living` WHERE 1
-
-
-//v='[{"band":"Weezer","song":"El Scorcho"}, {"band": "Chevelle", "song": "Family System"} ]';
-/*var $records = v;
-    myRecords = $.parseJSON($records);
-$('#my-final-table').dynatable({
-  dataset: {
-    records: myRecords
-  }
-});*/
-
+/*function rentLive(argument) {
 
 $.ajax({
   url: 'rentlive.php',
@@ -34,7 +23,7 @@ $.ajax({
   }
 });
 
-};
+};*/
 
 $( document ).ready(function() {
 // fill test 
@@ -51,9 +40,10 @@ $('#my-final-table2').dynatable({
 $("#tocv").attr("href", "tocv.php?day="+$('#trackbar').val());
 
 // начальная загрузка таб
- var d={'data':JSON.stringify([$('#trackbar').val()])};
+ changetable();
+ //var d={'data':JSON.stringify([$('#trackbar').val()])};
  //console.log(d);
-replaseDataindinatable('#my-final-table','rentlive.php',d);
+//replaseDataindinatable('#my-final-table','rentlive.php',d);
 
 //$("#tocv").attr("href", "tocv.php?day="+$('#trackbar').val());
 //-------------
@@ -90,9 +80,14 @@ function ontrackup(argument) {
 // send value
  var d={'data':JSON.stringify([$('#trackbar').val()])};
  //console.log(d);
-replaseDataindinatable('#my-final-table','rentlive.php',d);
+//replaseDataindinatable('#my-final-table','rentlive.php',d);
+changetable();
 
-$("#tocv").attr("href", "tocv.php?day="+$('#trackbar').val());
+ var where='rent_living';
+  if (globalstate==1) { where='rent_living';} 
+  else if(globalstate==2) {where='rent_business'}
+
+$("#tocv").attr("href", "tocv.php?day="+$('#trackbar').val()+"&type="+where);
 //console.log($("#tocv").attr('href'));
 
 }
@@ -147,9 +142,9 @@ $.ajax({
   type:'POST',
   data: datasend, 
   success: function(data){
-     // console.log('to db OK');
-       //console.log(data);
-       //console.log('to db OK');
+      console.log('to db OK');
+       console.log(data);
+       console.log('to db OK');
 
     myRecords = JSON.parse(data);
                         
@@ -165,18 +160,6 @@ $.ajax({
   }
 });
 
-
-/*
-       var s='[{"band": "Weezer2lorem", "song": "loremEl Scorcho2"}, {"band": "Chevelle2", "song": "Family System2"} ]';
-var $records =s;
-    myRecords = JSON.parse(fromurl);
-                        
-
- var dynatable = $(idtable).dynatable({ 
-    dataset: { records: myRecords } }, 
-    { features: { pushState: false }}).data("dynatable");
-                        dynatable.settings.dataset.originalRecords =  myRecords;
-                        dynatable.process();  */
 
 }
 
@@ -196,3 +179,27 @@ function tocv(argument) {
  
  }
 
+ function changetable(argument) {
+   // body...
+ var d={'data':JSON.stringify([$('#trackbar').val()])};
+ //d={'data':JSON.stringify([7])};
+
+ var where='rentlive.php';
+  if (globalstate==1) { where='rentlive.php';} 
+  else if(globalstate==2) {where='rentBissnes.php'}
+
+ //console.log(d);
+replaseDataindinatable('#my-final-table',where,d);
+
+ }
+
+ function rentbissnes(argument) {
+   // body...
+   globalstate=2;
+   changetable();
+ }
+ function rentlive(argument) {
+   // body...
+   globalstate=1;
+   changetable();
+ }

@@ -29,7 +29,11 @@ mysql_query("SET CHARACTER SET 'utf-8'");
  $curdate=date('Y-m-d',time());
 $datefrom=date('Y-m-d', strtotime($curdate .' - '.($output['day']-1).' day'));
 $dateto=date('Y-m-d',time()); 
-$sql="select `day`,`time`, `type`,`price`,`street`,`square`,`totalroom`,`metro`,`fhone`,`name`,`description` FROM `rent_living` WHERE `day` BETWEEN '".$datefrom."' AND '".$dateto."'";
+$sql="select `day`,`time`, `type`,`price`,`street`,`square`,`totalroom`,`metro`,`fhone`,`name`,`description` FROM `".$output['type']."` WHERE `day` BETWEEN '".$datefrom."' AND '".$dateto."'";
+
+
+
+
 
 //$sql="select `day`, `time`, `name`, `fhone` from `rent_living` where 1";
 

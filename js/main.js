@@ -1,3 +1,12 @@
+// Help fun
+
+/*//  show all methods
+var dino=$('#my-final-table2').data('dynatable');
+console.log(Object.getOwnPropertyNames(dino));
+ !!!!!!!!!!!!!!!
+console.dir(dino);
+*/
+
 function rentLive(argument) {
 
 // SELECT `day` as `День` , `time` as `Время` FROM `rent_living` WHERE 1
@@ -28,6 +37,27 @@ $.ajax({
 };
 
 $( document ).ready(function() {
+// fill test 
+var s='[{"band": "Weezer", "song": "El Scorcho"}, {"band": "Chevelle", "song": "Family System"} ]';
+
+var $records =s;
+    myRecords = JSON.parse(s);
+$('#my-final-table2').dynatable({
+  dataset: {
+    records: myRecords
+  }
+});
+// начально значение для дня
+$("#tocv").attr("href", "tocv.php?day="+$('#trackbar').val());
+
+// начальная загрузка таб
+ var d={'data':JSON.stringify([$('#trackbar').val()])};
+ //console.log(d);
+replaseDataindinatable('#my-final-table','rentlive.php',d);
+
+//$("#tocv").attr("href", "tocv.php?day="+$('#trackbar').val());
+//-------------
+
   // Handler for .ready() called.
 var myVar = setInterval(function() {
 
@@ -57,12 +87,27 @@ document.getElementById('trackBarValue').innerHTML = $('#trackbar').val();
 function ontrackup(argument) {
   // body...
 
-  console.log($('#trackbar').val());
-  var dino=$('#my-final-table').data('dynatable');
-  dino.processingIndicator.show();
+// send value
+ var d={'data':JSON.stringify([$('#trackbar').val()])};
+ //console.log(d);
+replaseDataindinatable('#my-final-table','rentlive.php',d);
+
+$("#tocv").attr("href", "tocv.php?day="+$('#trackbar').val());
+//console.log($("#tocv").attr('href'));
+
 }
 
+// обновить
 function testClick(argument) {
+// начальная загрузка таб
+ var d={'data':JSON.stringify([$('#trackbar').val()])};
+ //console.log(d);
+replaseDataindinatable('#my-final-table','rentlive.php',d);
+/*// take data from url
+replaseDataindinatable('#my-final-table','rentlive.php',5);
+
+
+
   // body... send date from n to
 $.post('test.php',{
         from: "Donald Duck",
@@ -76,42 +121,78 @@ var dino=$('#my-final-table tbody tr');
 dino.remove();
 
 
-$.ajax({
-  url: 'rentlive.php',
-  success: function(data){
-                console.log(data);
-    $('#my-final-table').dynatable({
-      dataset: {
-        records: $.parseJSON(data)
-      }
-    });
-  }
-});
-$('#my-final-table').data('dynatable').dom.update();
-         /* console.log('countB '+dino.records.count() );
-          var t='{"Дата": "2016-04-18","Время": "20:42:00","Тип": "Комната","Цена": "8000","Адрес": "улица Коненкова 21А","Площадь": "18","Комнат": "2","Метро": "Бибирево","Телефон": "966357","Имя": "НадеждаLOLO"}';
-            *///dino.state.push=t;
-/*            var $records = t;
-    myRecords = JSON.parse(t);
-$('#my-final-table').dynatable({
-  dataset: {
-    records: myRecords
-  }
-});*/
-          
-          //  dino.records.updateFromJson=t;
 
 
 
-          //  dino.dom.update();
-          //dino.remove();
-                  //  console.log('countR '+dino.records.count() )
+
+
 
 });
-
+*/
 
 
 
 }
 
+
+function replaseDataindinatable(idtable,fromurl,datasend) {
+  // body...
+/*
+var $records = fromurl;
+   myRecords = JSON.parse($records);*/
+
+
+$.ajax({
+  url: fromurl,
+  type:'POST',
+  data: datasend, 
+  success: function(data){
+     // console.log('to db OK');
+       //console.log(data);
+       //console.log('to db OK');
+
+    myRecords = JSON.parse(data);
+                        
+
+  var dynatable = $(idtable).dynatable({ 
+    dataset: { records: myRecords } }, 
+    { features: { pushState: false }}).data("dynatable");
+                        dynatable.settings.dataset.originalRecords =  myRecords;
+                        dynatable.process();  
+
+
+
+  }
+});
+
+
+/*
+       var s='[{"band": "Weezer2lorem", "song": "loremEl Scorcho2"}, {"band": "Chevelle2", "song": "Family System2"} ]';
+var $records =s;
+    myRecords = JSON.parse(fromurl);
+                        
+
+ var dynatable = $(idtable).dynatable({ 
+    dataset: { records: myRecords } }, 
+    { features: { pushState: false }}).data("dynatable");
+                        dynatable.settings.dataset.originalRecords =  myRecords;
+                        dynatable.process();  */
+
+}
+
+
+function tocv(argument) {
+   // body...
+ var d={'data':JSON.stringify([$('#trackbar').val()])};
+   $.ajax({
+  url: 'rentlive.php',
+  data: d,
+  type:"POST",
+  success: function(data){
+                console.log(data);
+                console.log("ok");
+  }
+});
+ 
+ }
 

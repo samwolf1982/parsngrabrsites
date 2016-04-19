@@ -1,5 +1,9 @@
 <?php
 include_once 'lib/setting.php';
+if(isset($_POST) && !empty($_POST['data'])) {
+   //echo var_dump(json_decode($_POST['data']));
+   $res=json_decode($_POST['data']);
+  // echo $res[0];
 
 
 $dbhost = $GLOBALS['u_host']; // Хост
@@ -8,9 +12,18 @@ $dbpassword =$GLOBALS['u_pass']; // Пароль
 $dbname = $GLOBALS['u_dbname']; // Имя базы данных
 
 
-$sql="select `day` as `День` , `time` as `Время` from `rent_living` WHERE 1";
-$sql="select `day` as `День` , `time` as `Время`,`price` as `Цена`,`street` as `Улица`, `totalroom` as `Комнат` ,`floar` as `Этаж`,`fhone` as `Телефон`, `name` as `Имя` from `rent_living` WHERE 1";
+ $curdate=date('Y-m-d',time());
+$datefrom=date('Y-m-d', strtotime($curdate .' - '.($res[0]-1).' day'));
+$dateto=date('Y-m-d',time()); 
+//echo "$curdate";
+
+
+//echo "$sql";
+
 $sql = "select `day`,`time`, `type`,`price`,`street`,`square`,`totalroom`,`metro`,`fhone`,`name`,`description` from `rent_living` ORDER BY `id` DESC";
+$sql="select `day`,`time`, `type`,`price`,`street`,`square`,`totalroom`,`metro`,`fhone`,`name`,`description` FROM `rent_living` WHERE `day` BETWEEN '".$datefrom."' AND '".$dateto."'";
+
+//echo " $sql";
 $v='[';
 
 $link = mysqli_connect($dbhost , $dbuser, $dbpassword , $dbname);
@@ -45,46 +58,6 @@ $v.=$temp;
 
 echo "$v";
 
-
-
-
-
-
-/*$link = mysqli_connect($dbhost, $dbuser, $dbpassword,$dbname );
-
-// * проверка соединения */
-// if (mysqli_connect_errno()) {
-//     printf("Не удалось подключиться: %s\n", mysqli_connect_error());
-//     exit();
-// }
-// //print_r( mysqli_character_set_name ( $link ));
-// mysqli_set_charset($link, "utf8");
-
-
-// $sql=" insert into `".$GLOBALS['type_base']."`(`day`, `time`, `type`, `description`, `price`, `region`, `punct`, `street`,`bild`, `metro`, `tometrowalk`, `tometrocar`, `square`, `floar`, `floars`, `totalroom`, `rooms`, `name`, `fhone`, `foto`,`link`,`maya`, `mayb`, `mayc`, `mayd`, `maye`, `mayf`, `mayg` ) value ('$dayer', '$timerest', '$typeqwer', '$description', '$price', '$region', '$punct', '$street', '$bild', '$metro', '$tometrowalk', '$tometrocar', '$square', '$floar', '$floars' , '$totalroom', '$rooms', '$name', '$fhone', '$foto', '$linke', '$maya', '$mayb', '$mayc', '$mayd', '$maye', '$mayf', '$mayg')";
-
-// mysqli_query($link,$sql)or die (mysql_error());
-// //mysql_query($sql, $link)  
-
-// // Закрываем соединение
-// mysqli_close($link);
-
-//echo "<br>TEL: ".$fhone."  NAME: ".$name  ;
-//$GLOBALS['write_room']=$GLOBALS['write_room']+1;    //++ ???
-
-
-
-
-
-$v='[
-  {
-    "Дата": "Weezer",
-    "Время": "El Scorcho"
-  },
-  {
-    "Дата": "Chevelle",
-    "Вемя": "Family System"
-  }
-]';
-//echo "$v";
+    die();
+}
   ?>

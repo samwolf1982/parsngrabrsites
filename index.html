@@ -30,8 +30,9 @@
                 <nav>
                     <ul>
                         <li onclick="rentLive()"><a href="#">Аренда жилой</a></li>
-                        <li><a href="tocv.php">To CV</a></li>
+                        <li><a href="tocv.php"  id="tocv">To CV</a></li>
                         <li><a href="#">Продажа жилая</a></li>
+                  
                    
                     </ul>
                 </nav>
@@ -44,14 +45,13 @@
 
                     <header>
                         <h1>article header h1</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec.</p>
                     </header>
                     <section>
-
+                  <p> Количество дней</p>
                     <input min="1" max="30" value="1"  type="range" id="trackbar" onchange="onChangeTrackBar()" onmouseup="ontrackup()" />
         Дни: <span id="trackBarValue">1</span>
 
-        <button onclick="testClick()">TEST</button>
+        <button onclick="testClick()">Обновить</button>
                         <h2>Аренда жилой</h2>
 
 <table id="my-final-table">
@@ -72,6 +72,8 @@
   <tbody>
   </tbody>
 </table>
+
+
 
 
 

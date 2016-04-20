@@ -593,7 +593,7 @@ $ddd->remove();
 
 
 
-
+$document=null;
 
 
 //echo $document;

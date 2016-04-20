@@ -51,7 +51,7 @@ $dateto=date('d/m/Y',time());
 $GLOBALS['type_base']='rent_living'; 
 $GLOBALS['totalparts']=null;
 //div.text-center:nth-child(2) > div:nth-child(2) > b:nth-child(2)
-
+/*
 loaddocpost('http://rent-scaner.ru/estate?per-page='.$GLOBALS['per_page'],generator_form_data("507","1",$datefrom,$dateto),'rent-scaner.ru');
 
 
@@ -77,7 +77,7 @@ for ($i=2; $i <=$GLOBALS['totalparts'] ; $i++) {
 loaddocpost('http://rent-scaner.ru/estate?page='.$i.'&per-page='.$GLOBALS['per_page'],generator_form_data("507","1",$datefrom,$dateto),'rent-scaner.ru');
 sleep(5);
 
-}
+}*/
 
 //-----------------  sale_living
 
@@ -173,6 +173,6 @@ sleep(5);
 }
 */
 
-
+die();
 
   ?>

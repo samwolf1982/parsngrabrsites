@@ -18,13 +18,13 @@ $dateto=date('Y-m-d',time());
 //echo "$curdate";
 
 
-//echo "$sql";
 
-$sql = "select `day`,`time`, `type`,`price`,`street`,`square`,`totalroom`,`metro`,`fhone`,`name`,`description` from `rent_living` ORDER BY `id` DESC";
+
+
 $sql="select `day`,`time`, `type`,`price`,`street`,`square`,`totalroom`,`metro`,`fhone`,`name`,`description` FROM `rent_living` WHERE `day` BETWEEN '".$datefrom."' AND '".$dateto."'";
 
-//echo " $sql";
-$v='[';
+
+
 $arr=[];
 $link = mysqli_connect($dbhost , $dbuser, $dbpassword , $dbname);
 /* проверка соединения */
@@ -42,20 +42,13 @@ while ($row = $result->fetch_row()) {
 
 //echo $row[5]."<br>";
 
-  $temp='{"Дата": "'.$row[0].'","Время": "'.$row[1].'","Тип": "'.$row[2].'","Цена": "'.$row[3].'","Адрес": "'.$row[4].'","Площадь": "'.(string)$row[5].'","Комнат": "'.$row[6].'","Метро": "'.$row[7].'","Телефон": "'.$row[8].'","Имя": "'.$row[9].'"},';
-$v.=$temp;
+
 
 $arr[]=array("Дата"=>$row[0],"Время"=>$row[1],"Тип"=>$row[2],"Цена"=>$row[3],"Адрес"=>$row[4],"Площадь"=>$row[5],"Комнат"=>$row[6],"Метро"=>$row[7],"Телефон"=>$row[8],"Имя"=>$row[9]);
-/*  $temp='{"Дата": "'.$row[0].'","Время": "'.$row[1].'","Тип": "'.$row[2].'","Цена": "'.$row[3].'","Адрес": "'.$row[4].'","Площадь": "'.(string)$row[5].'","Комнат": "'.$row[6].'","Метро": "'.$row[7].'","Телефон": "'.$row[8].'","Имя": "'.$row[9].'"},';
-$v.=$temp;*/
-
-  
 
 
-      // $row[0] $row[1]
     }
-    $v=substr($v, 0, -1);
-   $v.=']';
+
     /* очищаем результирующий набор */
     mysqli_free_result($result);
 }

@@ -54,19 +54,40 @@ $("#tocv").attr("href", "tocv.php?day="+$('#trackbar').val()+"&type="+where);
 //-------------
 // автоматически проверяет последний день
 $.ajax({
-  url: 'indexworker.php',
+  url: 'indexworkerrent_live.php',
   success: function(data){
       console.log('go to indexwork last day  OK');
   }
 });
+$.ajax({
+  url: 'indexworkersale_living.php',
+  success: function(data){
+      console.log('go to indexwork sale live OK');
+  }
+});
+
+
 // таймер 
   // Handler for .ready() called.
 var myVar = setInterval(function() {
 
 $.ajax({
-  url: 'indexworker.php',
+  url: 'indexworkerrent_live.php',
+  success: function(data){ live
+      console.log('go to indexwork rent OK');
+  }
+});
+
+
+
+}, 240000);
+  // Handler for .ready() called.
+var myVar2 = setInterval(function() {
+
+$.ajax({
+  url: 'indexworkersale_living.php',
   success: function(data){
-      console.log('go to indexwork OK');
+      console.log('go to indexwork sale live OK');
   }
 });
 

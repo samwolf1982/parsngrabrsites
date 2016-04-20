@@ -80,7 +80,7 @@ sleep(5);
 }
 
 //-----------------  sale_living
-
+/*
 $GLOBALS['type_base']='sale_living'; 
 $GLOBALS['totalparts']=null;
 //div.text-center:nth-child(2) > div:nth-child(2) > b:nth-child(2)
@@ -110,7 +110,7 @@ loaddocpost('http://rent-scaner.ru/estate?page='.$i.'&per-page='.$GLOBALS['per_p
 sleep(5);
 
 }
-
+*/
 
 //-----------------  rent_business
 
@@ -173,6 +173,6 @@ sleep(5);
 }
 */
 
-
+die();
 
   ?>

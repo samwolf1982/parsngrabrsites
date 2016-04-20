@@ -52,13 +52,14 @@ $("#tocv").attr("href", "tocv.php?day="+$('#trackbar').val()+"&type="+where);
 
 //$("#tocv").attr("href", "tocv.php?day="+$('#trackbar').val());
 //-------------
-
+// автоматически проверяет последний день
 $.ajax({
   url: 'indexworker.php',
   success: function(data){
-      console.log('go to indexwork OK');
+      console.log('go to indexwork last day  OK');
   }
 });
+// таймер 
   // Handler for .ready() called.
 var myVar = setInterval(function() {
 

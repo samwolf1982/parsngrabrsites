@@ -28,7 +28,7 @@ include_once 'lib/setting.php';
 
 //echo "OK";
 
- //set_time_limit ( 180 );
+ 
  //echo "gogo";
 
 
@@ -49,7 +49,7 @@ echo "$datefrom <br>";
 echo "$dateto <br>";
 
 $GLOBALS['type_base']='rent_living'; 
-loaddocpost('http://rent-scaner.ru/estate?per-page=50',generator_form_data("507","1",$datefrom,$dateto),'rent-scaner.ru');
+loaddocpost('http://rent-scaner.ru/estate?per-page=250',generator_form_data("507","1",$datefrom,$dateto),'rent-scaner.ru');
 
 /*sleep(7);
 

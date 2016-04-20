@@ -37,7 +37,12 @@ $('#my-final-table2').dynatable({
   }
 });
 // начально значение для дня
-$("#tocv").attr("href", "tocv.php?day="+$('#trackbar').val());
+var where='rent_living';
+  if (globalstate==1) { where='rent_living';} 
+  else if(globalstate==2) {where='rent_business'}
+
+$("#tocv").attr("href", "tocv.php?day="+$('#trackbar').val()+"&type="+where);
+
 
 // начальная загрузка таб
  changetable();
@@ -48,13 +53,19 @@ $("#tocv").attr("href", "tocv.php?day="+$('#trackbar').val());
 //$("#tocv").attr("href", "tocv.php?day="+$('#trackbar').val());
 //-------------
 
+$.ajax({
+  url: 'indexworker.php',
+  success: function(data){
+      console.log('go to indexwork OK');
+  }
+});
   // Handler for .ready() called.
 var myVar = setInterval(function() {
 
 $.ajax({
   url: 'indexworker.php',
   success: function(data){
-      console.log('to db OK');
+      console.log('go to indexwork OK');
   }
 });
 
@@ -81,7 +92,7 @@ function ontrackup(argument) {
  var d={'data':JSON.stringify([$('#trackbar').val()])};
  //console.log(d);
 //replaseDataindinatable('#my-final-table','rentlive.php',d);
-changetable();
+
 
  var where='rent_living';
   if (globalstate==1) { where='rent_living';} 
@@ -89,7 +100,7 @@ changetable();
 
 $("#tocv").attr("href", "tocv.php?day="+$('#trackbar').val()+"&type="+where);
 //console.log($("#tocv").attr('href'));
-
+changetable();
 }
 
 // обновить
@@ -196,10 +207,20 @@ replaseDataindinatable('#my-final-table',where,d);
  function rentbissnes(argument) {
    // body...
    globalstate=2;
+   var where='rent_living';
+  if (globalstate==1) { where='rent_living';} 
+  else if(globalstate==2) {where='rent_business'}
+
+$("#tocv").attr("href", "tocv.php?day="+$('#trackbar').val()+"&type="+where);
    changetable();
  }
  function rentlive(argument) {
    // body...
    globalstate=1;
+   var where='rent_living';
+  if (globalstate==1) { where='rent_living';} 
+  else if(globalstate==2) {where='rent_business'}
+
+$("#tocv").attr("href", "tocv.php?day="+$('#trackbar').val()+"&type="+where);
    changetable();
  }

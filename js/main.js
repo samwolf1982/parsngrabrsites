@@ -154,9 +154,9 @@ $.ajax({
   type:'POST',
   data: datasend, 
   success: function(data){
-      console.log('to db OK');
-       console.log(data);
-       console.log('to db OK');
+      //console.log('to db OK');
+       //console.log(data);
+     //  console.log('to db OK');
 
     myRecords = JSON.parse(data);
                         

@@ -45,12 +45,44 @@ $dateto="18/04/2016";   //18/04/2016
 $datefrom=date('d/m/Y', strtotime($curdate .' -1 day'));
 $dateto=date('d/m/Y',time()); 
 
-echo "$datefrom <br>";
-echo "$dateto <br>";
+//echo "$datefrom <br>";
+//echo "$dateto <br>";
 
 $GLOBALS['type_base']='rent_living'; 
-loaddocpost('http://rent-scaner.ru/estate?per-page=250',generator_form_data("507","1",$datefrom,$dateto),'rent-scaner.ru');
 
+//div.text-center:nth-child(2) > div:nth-child(2) > b:nth-child(2)
+
+loaddocpost('http://rent-scaner.ru/estate?per-page='.$GLOBALS['per_page'],generator_form_data("507","1",$datefrom,$dateto),'rent-scaner.ru');
+
+
+;
+
+if($GLOBALS['totalparts']>$GLOBALS['per_page']){
+$r=(int)($GLOBALS['totalparts']/$GLOBALS['per_page']);
+ if( ($GLOBALS['totalparts']%(int)$GLOBALS['per_page'])!=0){
+ $r++;
+ $GLOBALS['totalparts']=$r;
+ }
+
+
+}else
+{
+	# code...
+	$GLOBALS['totalparts']=0;
+}
+
+//echo "<br>Count: ".$GLOBALS['totalparts'];
+
+//http://rent-scaner.ru/estate?page=11&per-page=50
+for ($i=2; $i <=$GLOBALS['totalparts'] ; $i++) { 
+	# code...
+loaddocpost('http://rent-scaner.ru/estate?page='.$i.'&per-page='.$GLOBALS['per_page'],generator_form_data("507","1",$datefrom,$dateto),'rent-scaner.ru');
+sleep(5);
+//echo "sleep ".$i."<br>";
+}
+
+//echo "I m finish<br>";
+//if($GLOBALS['totalparts']>250)
 /*sleep(7);
 
 

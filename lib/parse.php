@@ -13,13 +13,16 @@ include_once 'setting.php';
 $GLOBALS['date_publish_state']=false;
 $GLOBALS['telcolect']=array();
 
-//define($rent_living, "rent_living");
-//include_once 'lib/library/vendor/jquery-1.7.2.min.js';
 
-//названия бд
-// rent_living rentsale_business  sale_living
-//$$typebd="rent_living";
 
+
+
+
+
+
+
+
+  // регулярки для старой версии пхп
 // today
 function my_replace_function1($match){
     global $data;
@@ -171,6 +174,30 @@ function parse($document)
   $document = phpQuery::newDocument($document);
     //$document1 = phpQuery::newDocument($document);
      // $document2 = phpQuery::newDocument($document);
+
+// количество вкладок
+ 
+ if($GLOBALS['totalparts']== null){
+
+
+
+  $a12='div.text-center:nth-child(2) > div:nth-child(2) > b:nth-child(2)';
+//$a12='div.text-center:nth-child(2) > div:nth-child(2)';
+$str=null;
+$str=str_replace('>', '', $a12) ;
+$p_titleInfo=null;
+$p_titleInfo = $document->find($a12);
+ // clear all  class="col-md-6"
+ $pq = pq($p_titleInfo);
+if (preg_match ("/^([0-9]+)$/",$pq->text())) {
+    $GLOBALS['totalparts']=(int)$pq->text();
+} else {
+     $GLOBALS['totalparts']=(int)0;
+}
+
+ }
+
+
 
 
 $a3del1="tr.detailed-advert:nth-child(1)";
@@ -364,13 +391,14 @@ $ddd=$document->find($str);
 $ddd->remove();
  
 
- 	//return;
- 	continue;
- 	// break;
+if($GLOBALS['next_if_present']==true)
+{ continue;}
+else {$GLOBALS['totalparts']=0;  break;}
+
 
 
  }
- //	echo "after PRESENT<br> ";
+
 
 
 

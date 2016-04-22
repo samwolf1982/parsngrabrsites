@@ -29,9 +29,24 @@ mysql_query("SET CHARACTER SET 'utf-8'");
  $curdate=date('Y-m-d',time());
 $datefrom=date('Y-m-d', strtotime($curdate .' - '.($output['day']-1).' day'));
 $dateto=date('Y-m-d',time()); 
-$sql="select `day`,`time`, `type`,`price`,`street`,`square`,`totalroom`,`metro`,`fhone`,`name`,`description` FROM `".$output['type']."` WHERE `day` BETWEEN '".$datefrom."' AND '".$dateto."'";
 
 
+$tablestate=$output['type'];
+   $type='rent_living';
+  if ($tablestate==1) { $type='rent_living';} 
+  else if($tablestate==2) {$type='rent_business';}
+     else if($tablestate==3) {$type='sale_living';}
+       else if($tablestate==4) {$type='sale_business';}
+
+
+
+
+
+  $sql="select `day`, `time`, `type`, substring(`description`,1,100), `price`, `region`, `punct`, `street`, `bild`, `metro`, `tometrowalk`, `tometrocar`, `square`, `floar`, `floars`, `totalroom`, `rooms`, `name`, `fhone`,substring(`foto`,1,30), `link` FROM `".$type."` WHERE `day` BETWEEN '".$datefrom."' AND '".$dateto."'  ";
+
+
+
+//error_log($sql,3,'log.txt');
 
 
 
@@ -45,7 +60,30 @@ $output = fopen('php://output', 'w');
 
 //fputcsv($output, array('Column 1'));
 // output the column headings
-fputcsv($output, array('Дата','Время','Тип','Цена','Адрес','Площадь','Всего_комнат','Метро','Телефон','Имя','Описание'));
+fputcsv($output, array(
+              "Дата",
+	         "Время",
+	           "Тип",
+	      "Описание",
+	          "Цена",
+	        "Регион",
+	     "Нас_пункт",
+	         "Улица",
+			   "Дом",
+ 			 "Метро",
+   "До_метро_пешком",
+     "До_метро_авто",
+           "Площадь",
+              "Этаж",
+         "Этажность",
+      "Всего_комнат",
+   "Комнат_в_сделке",
+               "Имя",
+           "Телефон",
+              "Фото",
+	      "Источник"	
+
+	));
 //fputcsv($output, array('День'));
 
 // fetch the data

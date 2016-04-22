@@ -4,6 +4,8 @@
 #!/usr/bin/php -ddisplay_errors=E_ALL
 #!/usr/bin/php -n -ddisplay_errors=E_ALL
 <?php
+//date_default_timezone_set ('Europe/Kiev' );
+
 header('Content-Type: text/html; charset=utf-8');
 //                 caci@leeching.net   mail
 //    db                us                 pass
@@ -22,27 +24,36 @@ include_once 'lib/setting.php';
      include_once 'lib/generator_form_data.php';
    //require_once 'lib/generator_form_data.php';
 
+if(isset($_POST['next_if_present']))
+ {
+      if($_POST['next_if_present'] == "true"){
+        $GLOBALS['next_if_present']=true; 
+      }else
+      {
+   $GLOBALS['next_if_present']=false;
+      }
+}
+$d=2;   // количество дней для проверки
+if(isset($_POST['day'])) // первий раз нету
+ {
+  $d=$_POST['day'];
+}
 
-//     get OK
-//loaddocget('http://rent-scaner.ru/estate');
-
-//echo "OK";
-
- 
- //echo "gogo";
+   //error_log("count day $d \n",3, 'log.txt');
 
 
 
 $GLOBALS['write_room']=0;  // count write
-$GLOBALS['type_base']='rent_living'; //  'rent_business'  'sale_business'  'sale_living'
+
 $GLOBALS['filter']=true;   // false all write  truu filter
+
 
 
 
 $datefrom="17/04/2016";  //17/04/2016
 $dateto="18/04/2016";   //18/04/2016
  $curdate=date('d-m-Y',time());
-$datefrom=date('d/m/Y', strtotime($curdate .' -1 day'));
+$datefrom=date('d/m/Y', strtotime($curdate .' -'.$d.' day'));
 $dateto=date('d/m/Y',time()); 
 
 
@@ -52,8 +63,10 @@ $GLOBALS['type_base']='rent_living';
 $GLOBALS['totalparts']=null;
 //div.text-center:nth-child(2) > div:nth-child(2) > b:nth-child(2)
 
-loaddocpost('http://rent-scaner.ru/estate?per-page='.$GLOBALS['per_page'],generator_form_data("507","1",$datefrom,$dateto),'rent-scaner.ru');
+  loaddocpost('http://rent-scaner.ru/estate?per-page='.$GLOBALS['per_page'],generator_form_data("507","1",$datefrom,$dateto),'rent-scaner.ru');
 
+$r=date('r', time());
+error_log("$r  $datefrom   $dateto   \n",3, 'log.txt');
 
 
 

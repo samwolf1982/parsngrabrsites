@@ -3,7 +3,20 @@ include_once 'lib/setting.php';
 if(isset($_POST) && !empty($_POST['data'])) {
    //echo var_dump(json_decode($_POST['data']));
    $res=json_decode($_POST['data']);
-  // echo $res[0];
+   $tablestate=json_decode($_POST['globalstate']);
+  
+
+
+  // body...
+   $type='rent_living';
+  if ($tablestate==1) { $type='rent_living';} 
+  else if($tablestate==2) {$type='rent_business';}
+     else if($tablestate==3) {$type='sale_living';}
+       else if($tablestate==4) {$type='sale_business';}
+
+
+
+   //echo $tablestate;
 
 
 $dbhost = $GLOBALS['u_host']; // Хост
@@ -16,14 +29,15 @@ $dbname = $GLOBALS['u_dbname']; // Имя базы данных
 $datefrom=date('Y-m-d', strtotime($curdate .' - '.($res[0]-1).' day'));
 $dateto=date('Y-m-d',time()); 
 //echo "$curdate";
+//      take table
 
 
 
 
 
-$sql="select `day`,`time`, `type`,`price`,`street`,`square`,`totalroom`,`metro`,`fhone`,`name`,`description` FROM `rent_living` WHERE `day` BETWEEN '".$datefrom."' AND '".$dateto."'";
+	$sql="select `day`, `time`, `type`, substring(`description`,1,100), `price`, `region`, `punct`, `street`, `bild`, `metro`, `tometrowalk`, `tometrocar`, `square`, `floar`, `floars`, `totalroom`, `rooms`, `name`, `fhone`,substring(`foto`,1,30), `link` FROM `".$type."` WHERE `day` BETWEEN '".$datefrom."' AND '".$dateto."'  ";
 
-
+  //error_log($sql."\n" ,3, 'log.txt');
 
 $arr=[];
 $link = mysqli_connect($dbhost , $dbuser, $dbpassword , $dbname);
@@ -40,11 +54,33 @@ if ($result = mysqli_query($link, $sql)) {
     //printf("Select вернул %d строк.\n", mysqli_num_rows($result));
 while ($row = $result->fetch_row()) {
 
-//echo $row[5]."<br>";
 
 
 
-$arr[]=array("Дата"=>$row[0],"Время"=>$row[1],"Тип"=>$row[2],"Цена"=>$row[3],"Адрес"=>$row[4],"Площадь"=>$row[5],"Комнат"=>$row[6],"Метро"=>$row[7],"Телефон"=>$row[8],"Имя"=>$row[9]);
+$arr[]=array( "Дата"=>$row[0],
+	         "Время"=>$row[1],
+	           "Тип"=>$row[2],
+	      "Описание"=>$row[3],
+	          "Цена"=>$row[4],
+	        "Регион"=>$row[5],
+	     "Нас_пункт"=>$row[6],
+	         "Улица"=>$row[7],
+			   "Дом"=>$row[8],
+ 			 "Метро"=>$row[9],
+   "До_метро_пешком"=>$row[10],
+     "До_метро_авто"=>$row[11],
+           "Площадь"=>$row[12],
+              "Этаж"=>$row[13],
+         "Этажность"=>$row[14],
+      "Всего_комнат"=>$row[15],
+   "Комнат_в_сделке"=>$row[16],
+               "Имя"=>$row[17],
+           "Телефон"=>$row[18],
+              "Фото"=>$row[19],
+	      "Источник"=>$row[20]	         
+	        
+	        
+	         );
 
 
     }

@@ -263,7 +263,7 @@ $region=$region='Москва';// регион москва
         $name=null;
          $fhone='****'; 
   $foto=null;
-   $linke=null;
+   $linke='Rent Scaner';
 $time_publish='00:00:59';  // если ето значение значить ошибка в регулярке
 $date_publish='1900-12-31';       // заполнять во время виборочного парсинга по одному дню можно дать в функцию
 
@@ -383,6 +383,8 @@ $fhone=implode('',  $GLOBALS['telcolect']);
  if( is_present_in_db($date_publish,$time_publish,$street,$name,$fhone,$filter)==true){
  //	echo "PRESENT ";
     //echo "<br> Совпадение TEL: ".$fhone."  NAME: ".$name  ;
+   //error_log("<br> Совпадение TEL: ".$fhone."  NAME: ".$name."\n" ,3, 'log.txt');
+
   //remove
 $str=null;
 $str=str_replace('>', '', $a3del1) ;

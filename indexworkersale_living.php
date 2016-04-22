@@ -4,6 +4,10 @@
 #!/usr/bin/php -ddisplay_errors=E_ALL
 #!/usr/bin/php -n -ddisplay_errors=E_ALL
 <?php
+
+
+
+
 header('Content-Type: text/html; charset=utf-8');
 //                 caci@leeching.net   mail
 //    db                us                 pass
@@ -22,14 +26,22 @@ include_once 'lib/setting.php';
      include_once 'lib/generator_form_data.php';
    //require_once 'lib/generator_form_data.php';
 
+if(isset($_POST['next_if_present']))
+ {
+      if($_POST['next_if_present'] == "true"){
+        $GLOBALS['next_if_present']=true; 
+      }else
+      {
+   $GLOBALS['next_if_present']=false;
+      }
+}
+$d=2;   // количество дней для проверки
+if(isset($_POST['day']))
+ {
+  $d=$_POST['day'];
+}
 
-//     get OK
-//loaddocget('http://rent-scaner.ru/estate');
 
-//echo "OK";
-
- 
- //echo "gogo";
 
 
 
@@ -42,7 +54,7 @@ $GLOBALS['filter']=true;   // false all write  truu filter
 $datefrom="17/04/2016";  //17/04/2016
 $dateto="18/04/2016";   //18/04/2016
  $curdate=date('d-m-Y',time());
-$datefrom=date('d/m/Y', strtotime($curdate .' -1 day'));
+$datefrom=date('d/m/Y', strtotime($curdate .' -'.$d.' day'));
 $dateto=date('d/m/Y',time()); 
 
 

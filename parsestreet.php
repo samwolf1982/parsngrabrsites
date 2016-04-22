@@ -11,7 +11,6 @@ include_once 'lib/setting.php';
 
    //$res=json_decode($_GET['data']);
 
-
 //echo "OL";
 parse_str($_SERVER['QUERY_STRING'], $output);
 //echo var_dump($output);
@@ -23,11 +22,52 @@ $dbname = $GLOBALS['u_dbname']; // Имя базы данных
 // output headers so that the file is downloaded rather than displayed
 
 
+/**
+*  класс для разделение улиц и номера дома также бульват и проулок
+*/
+class Parse_Street
+{
+ public	$sql ;
+	public $link;
+
+	function __construct($sql1)
+	{
+		# code...
+          $this->sql=$sql1;
+	}
+	public function parse_Bulvar_Pereulok_street($value='')
+	{
+		# code...
+     // $rows = mysqli_query($link,$sql);
 
 
 
+	}
+	public function conect($value='')
+	{
+		# code...
+$this->link = mysqli_connect($dbhost , $dbuser, $dbpassword);
+
+//print_r( mysqli_character_set_name ( $link ));
+//mysql_set_charset($link, "utf8");
+
+
+    //printf("Select вернул %d строк.\n", mysqli_num_rows($result));
+mysqli_set_charset($this->link, "utf8");                //  
+mysqli_select_db($this->link, $dbname);  //,'testwp1'
+
+
+	}
+}
 
 $sql="select `street` from `rent_living` where 1 LIMIT 500";
+
+$obj=new Parse_Street($sql); 
+
+
+
+
+
 
 //error_log($sql,3,'log.txt');
 
@@ -89,8 +129,8 @@ while ($row = mysqli_fetch_assoc($rows)) {
 //    1)  поиск ул ./;.,  возможно бульвар.
 
       $house=null;
-
-       $arr=  preg_split("/[(Бульвар)|(б)]ульвар/", $row['street']);
+      $adress=$row['street'];
+       $arr=  preg_split("/[(Бульвар)|(б)]ульвар|(П)ереулок|(п)ереулок/", $row['street']);
           //echo $row['street']."<br>";
     if(count($arr)>1){
     	    echo "<br>";
@@ -126,15 +166,42 @@ if(count($colect)>0){
 //      доделать 
 if($house==null)
 {
-    $arr=  preg_split("/(ул.)|(у,)|(ул:)/", $row['street']);
+    $arr=  preg_split("/(улица.)|(улица,)|(ул.)|(ул,)|(ул:)|(ул\s)/", $row['street']);
           //echo $row['street']."<br>";
     if(count($arr)>1){
-         
+    	//   адрес
+    	//echo "<br>".$row['street']."::::: ".$arr[0]."----".$arr[1] ;     
+    	if(strlen($arr[1])>1){
+    //	echo "string";
+    		                  // первое число в второй частиї
+                               $colect=array();
+                 $line = preg_replace_callback('|([0-9]*)|',
+                                    function ($matches) use (&$colect) {
+ //                                     echo " OK ".$matches[0];
+                                    $colect[]=$matches[0];
+                                return ($matches[0]);
+                                 },  trim( $arr[1]));
+   // echo $line;
+if(count($colect)>0){
+   //echo "<br><br>--------UP<br>";
+         	//   echo Debuger::dumper($matches[0]);
+         	//echo print_r($matches);
+   $house=$colect[0];
+   $adress=$arr[0];
+           //   echo $row['street'] ."  :::::: ".$colect[0];
+             //     echo "<br>-------DOWN";
+//echo "<br>".$row['street']."::::: ".$house."----".$adress ;         
+     }
+
+    		
+    	}
+
+ 
     }
- echo "house ".$house ;
+
 }
-
-
+ if($house!=null)
+echo "<br>".$row['street']."::::: ".$house."----".$adress ;
 // end while
 }
 

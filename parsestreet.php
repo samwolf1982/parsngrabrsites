@@ -35,10 +35,14 @@ class Parse_Street
 		# code...
           $this->sql=$sql1;
 	}
+	// full parse 3 stage 
 	public function parse_Bulvar_Pereulok_street($value='')
 	{
 		# code...
      // $rows = mysqli_query($link,$sql);
+
+
+
 
 
 

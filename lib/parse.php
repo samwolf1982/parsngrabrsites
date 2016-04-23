@@ -532,7 +532,9 @@ $rooms='******';
 
 
 //6 foto
+$a6='tr.detailed-advert:nth-child(1) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > a:attr("href")';
 
+//$a6='tr.detailed-advert:nth-child(9) > td:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > a:nth-child(5)';
 $str=null;
 $str=str_replace('>', '', $a6) ;
 $p_titleInfo=null;

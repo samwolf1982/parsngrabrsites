@@ -23,8 +23,8 @@ $dbname = $GLOBALS['u_dbname']; // Имя базы данных
 header('Content-Type: text/csv; charset=UTF-8');
 header('Content-Disposition: attachment; filename=data.csv');
 mb_internal_encoding("UTF-8");
-mysql_query("SET NAMES 'utf-8");
-mysql_query("SET CHARACTER SET 'utf-8'");
+//mysqli_query("SET NAMES 'utf-8");
+//mysqli_query("SET CHARACTER SET 'utf-8'");
 
  $curdate=date('Y-m-d',time());
 $datefrom=date('Y-m-d', strtotime($curdate .' - '.($output['day']-1).' day'));
@@ -42,7 +42,7 @@ $tablestate=$output['type'];
 
 
 
-  $sql="select `day`, `time`, `type`, substring(`description`,1,100), `price`, `region`, `punct`, `street`, `bild`, `metro`, `tometrowalk`, `tometrocar`, `square`, `floar`, `floars`, `totalroom`, `rooms`, `name`, `fhone`,substring(`foto`,1,30), `link` FROM `".$type."` WHERE `day` BETWEEN '".$datefrom."' AND '".$dateto."'  ";
+  $sql="select `day`, `time`, `type`, `description`, `price`, `region`, `punct`, `street`, `bild`, `metro`, `tometrowalk`, `tometrocar`, `square`, `floar`, `floars`, `totalroom`, `rooms`, `name`, `fhone`,`foto`, `link` FROM `".$type."` WHERE `day` BETWEEN '".$datefrom."' AND '".$dateto."'  ";
 
 
 
@@ -98,7 +98,7 @@ $link = mysqli_connect($dbhost , $dbuser, $dbpassword);
     //printf("Select вернул %d строк.\n", mysqli_num_rows($result));
 mysqli_set_charset($link, "utf8");                //  
 mysqli_select_db($link, $dbname);  //,'testwp1'
-$rows = mysqli_query($link,$sql);
+$rows = mysqli_query($link,$sql,MYSQLI_STORE_RESULT);
 
 // loop over the rows, outputting them
 while ($row = mysqli_fetch_assoc($rows)) {
@@ -106,7 +106,7 @@ while ($row = mysqli_fetch_assoc($rows)) {
 	fputcsv($output, $row);
          //var_dump($row);
 }
- // mysql_free_result($result);
+ mysqli_free_result($rows);
 
 //}
 ?>

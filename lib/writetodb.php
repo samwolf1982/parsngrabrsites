@@ -62,6 +62,10 @@ mysqli_set_charset($link, "utf8");
   //  mysql_query('SET COLLATION_CONNECTION="utf8_general_ci"', $link);
 
 //mysql_query('SET NAMES utf8');
+//error_log("fot:".$foto."\n",3,'log.txt');
+//echo "write";
+
+
 $sql=" insert into `".$GLOBALS['type_base']."`(`day`, `time`, `type`, `description`, `price`, `region`, `punct`, `street`,`bild`, `metro`, `tometrowalk`, `tometrocar`, `square`, `floar`, `floars`, `totalroom`, `rooms`, `name`, `fhone`, `foto`,`link`,`maya`, `mayb`, `mayc`, `mayd`, `maye`, `mayf`, `mayg` ) value ('$dayer', '$timerest', '$typeqwer', '$description', '$price', '$region', '$punct', '$street', '$bild', '$metro', '$tometrowalk', '$tometrocar', '$square', '$floar', '$floars' , '$totalroom', '$rooms', '$name', '$fhone', '$foto', '$linke', '$maya', '$mayb', '$mayc', '$mayd', '$maye', '$mayf', '$mayg')";
 
 $sql=" insert into `".$GLOBALS['type_base']."`(`day`, `time`, `type`, `description`, `price`, `region`, `punct`, `street`,`bild`, `metro`, `tometrowalk`, `tometrocar`, `square`, `floar`, `floars`, `totalroom`, `rooms`, `name`, `fhone`, `foto`,`link`,`maya`, `mayb`, `mayc`, `mayd`, `maye`, `mayf`, `mayg` ) value ('".addslashes($dayer)."', '".addslashes($timerest)."', '".addslashes($typeqwer)."', '".addslashes($description)."', '".addslashes($price)."', '".addslashes($region)."', '".addslashes($punct)."', '".addslashes($street)."', '".addslashes($bild)."', '".addslashes($metro)."', '".addslashes($tometrowalk)."', '".addslashes($tometrocar)."', '".addslashes($square)."', '".addslashes($floar)."', '".addslashes($floars)."' , '".addslashes($totalroom)."', '".addslashes($rooms)."', '".addslashes($name)."', '".addslashes($fhone)."', '".addslashes($foto)."', '".addslashes($linke)."', '".addslashes($maya)."', '".addslashes($mayb)."', '".addslashes($mayc)."', '".addslashes($mayd)."', '".addslashes($maye)."', '".addslashes($mayf)."', '".addslashes($mayg)."')";

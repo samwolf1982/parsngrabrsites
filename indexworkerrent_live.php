@@ -66,7 +66,7 @@ $GLOBALS['totalparts']=null;
   loaddocpost('http://rent-scaner.ru/estate?per-page='.$GLOBALS['per_page'],generator_form_data("507","1",$datefrom,$dateto),'rent-scaner.ru');
 
 $r=date('r', time());
-error_log("$r  $datefrom   $dateto   \n",3, 'log.txt');
+//error_log("$r  $datefrom   $dateto   \n",3, 'log.txt');
 
 
 
